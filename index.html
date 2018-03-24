@@ -182,7 +182,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
           </a>
@@ -192,7 +192,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
             关于
           </a>
@@ -202,7 +202,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
           </a>
@@ -212,7 +212,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
           </a>
@@ -440,7 +440,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/24/HTML与Css小技巧(1)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AmamiRyoin">
@@ -459,7 +459,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/09/hello-world/" itemprop="url">Hello World</a></h1>
+                <a class="post-title-link" href="/2018/03/24/HTML与Css小技巧(1)/" itemprop="url">HTML与Css小技巧(1)</a></h1>
         
 
         <div class="post-meta">
@@ -471,8 +471,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-09T10:48:19+08:00">
-                2018-03-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-24T21:51:17+08:00">
+                2018-03-24
               </time>
             
 
@@ -511,15 +511,169 @@
       
         
           
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+            <h1 id="HTML与Css小技巧-1"><a href="#HTML与Css小技巧-1" class="headerlink" title="HTML与Css小技巧(1)"></a>HTML与Css小技巧(1)</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>俗话说能用css解决的问题千万别用js，这里主要就给各位大佬介绍下不常用的或者说是新奇的css小技巧。</p>
+<h3 id="css-混合模式"><a href="#css-混合模式" class="headerlink" title="css 混合模式"></a>css 混合模式</h3><p>熟悉PS的人应该都知道混合模式，实际上在<code>canvas</code>和<code>svg</code>中也有涉及，而在<code>css</code>中混合模式被称为<code>mix-blend-mode</code>，属性如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">mix-blend-mode： normal;          //正常</span><br><span class="line">mix-blend-mode： multiply;        //正片叠底</span><br><span class="line">mix-blend-mode： screen;          //滤色</span><br><span class="line">mix-blend-mode： overlay;         //叠加</span><br><span class="line">mix-blend-mode： darken;          //变暗</span><br><span class="line">mix-blend-mode： lighten;         //变亮</span><br><span class="line">mix-blend-mode： color-dodge;     //颜色减淡</span><br><span class="line">mix-blend-mode： color-burn;      //颜色加深</span><br><span class="line">mix-blend-mode： hard-light;      //强光</span><br><span class="line">mix-blend-mode： soft-light;      //柔光</span><br><span class="line">mix-blend-mode： difference;      //差值</span><br><span class="line">mix-blend-mode： exclusion;       //排除</span><br><span class="line">mix-blend-mode： hue;             //色相</span><br><span class="line">mix-blend-mode： saturation;      //饱和度</span><br><span class="line">mix-blend-mode： color;           //颜色</span><br><span class="line">mix-blend-mode： luminosity;      //亮度</span><br><span class="line"></span><br><span class="line">mix-blend-mode： initial;         //初始</span><br><span class="line">mix-blend-mode： inherit;         //继承</span><br><span class="line">mix-blend-mode： unset;           //复原</span><br></pre></td></tr></table></figure>
+<p>额，具体的什么效果我就不说了，程序员当然都是直接上代码啊！</p>
+<p><div class="blend"><h4>请选择以下选项改变mix-blend-mode属性<br>    <select><br>        <option value="normal" selected>normal-正常</option><br>        <option value="multiply">multiply-正片叠底</option><br>        <option value="screen">screen-滤色</option><br>        <option value="overlay">overlay-叠加</option><br>        <option value="darken">darken-变暗</option><br>        <option value="lighten">lighten-变亮</option><br>        <option value="color-dodge">color-dodge-颜色减淡</option><br>        <option value="color-burn">color-burn-颜色加深</option><br>        <option value="hard-light">hard-light-强光</option><br>        <option value="soft-light">soft-light-柔光</option><br>        <option value="difference">difference-差值(</option><br>        <option value="exclusion">exclusion-排除</option><br>        <option value="hue">hue-色相</option><br>        <option value="saturation">saturation-饱和度</option><br>        <option value="color">color-颜色</option><br>        <option value="luminosity">luminosity-亮度</option><br>        <option value="initial">initial-初始</option><br>        <option value="inherit">inherit-继承</option><br>        <option value="unset">unset-复原</option><br>    </select><br></h4></div></p>
+<p><style>.blend {height:717px;background: url(/images/haruka_mana.jpg) no-repeat left top, url(/images/765pro.jpg) no-repeat left bottom;}</style></p>
+<script type="text/javascript">if (window.addEventListener) {var eleBox = document.getElementsByClassName("blend")[0], eleSelect;if (eleBox && (eleSelect = eleBox.querySelector("select"))) {eleSelect.addEventListener("change", function() {eleBox.style.backgroundBlendMode = this.value;});}}</script>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/24/日常Js学习汇总(1)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AmamiRyoin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/headImg/headImg.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AmamiRyoin's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/24/日常Js学习汇总(1)/" itemprop="url">日常Js学习汇总(1)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-24T16:07:25+08:00">
+                2018-03-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="日常Js学习汇总-1"><a href="#日常Js学习汇总-1" class="headerlink" title="日常Js学习汇总(1)"></a>日常Js学习汇总(1)</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>去年11月份本来就打算开始写博客的结果拖到现在，也是服了自己的执行力了，不过总算也是开始写起来了。如果觉得写的不错，各位看官还请打个赏呗#滑稽<br>上个月刚跳槽换公司，面试时候出的笔试题当初做的一脸懵逼啊，倒不是说难，反而可以说是太基础，基础到平时大家都不会怎么去用（只是以我个人的观点来看，我承认自己基本功不是很扎实#流下了弱者的泪水），这里就凭着本人不算强的记忆力，把这些题目分享下。</p>
+<h3 id="Js基础之Number对象"><a href="#Js基础之Number对象" class="headerlink" title="Js基础之Number对象"></a>Js基础之Number对象</h3><p>Number 对象是原始数值的包装对象。</p>
+<h4 id="创建-Number-对象的语法："><a href="#创建-Number-对象的语法：" class="headerlink" title="创建 Number 对象的语法："></a>创建 Number 对象的语法：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var myNum=new Number(value);</span><br><span class="line">var myNum=Number(value);</span><br></pre></td></tr></table></figure>
+<h5 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h5><p>参数 <code>value</code> 是要创建的 Number 对象的数值，或是要转换成数字的值。</p>
+<h5 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h5><p>当 Number() 和运算符 new 一起作为构造函数使用时，它返回一个新创建的 Number 对象。如果不用 new 运算符，把 Number() 作为一个函数来调用，它将把自己的参数转换成一个原始的数值，并且返回这个值（如果转换失败，则返回 NaN）。</p>
+<h3 id="Number-对象属性"><a href="#Number-对象属性" class="headerlink" title="Number 对象属性"></a>Number 对象属性</h3><ul>
+<li><p><code>constructor</code> ——–返回对此对象的 Number 函数的引用。</p>
+</li>
+<li><p><code>MAX_VALUE</code> ——–表示的最大的数。</p>
+</li>
+<li><p><code>Min_VALUE</code> ——–表示的最小的数。</p>
+</li>
+<li><p><code>NaN</code> ——–非数字值。(可以理解为Not a Number)</p>
+</li>
+<li><p><code>NEGATIVE_INFINITY</code> ——–负无穷大，溢出时返回该值。</p>
+</li>
+<li><p><code>POSITIVE_INFINITY</code> ——–正无穷大，溢出时返回该值。</p>
+</li>
+<li><p><code>prototype</code> ———原型。</p>
+</li>
+</ul>
+<h3 id="Number-对象方法"><a href="#Number-对象方法" class="headerlink" title="Number 对象方法"></a>Number 对象方法</h3><ul>
+<li><p><code>toString</code> ———把数字转换为字符串，使用指定的基数。</p>
+</li>
+<li><p><code>toLocaleString</code> ——–把数字转换为字符串，使用本地数字格式顺序。</p>
+</li>
+<li><p><code>toFixed</code> ——–把数字转换为字符串，结果的小数点后有指定位数的数字。</p>
+</li>
+<li><p><code>toExponential</code> ——–把对象的值转换为指数计数法。(这个不查手册还真不知道还有这种方法)</p>
+</li>
+<li><p><code>toPrecision</code> ——–把数字格式化为指定的长度。（这个也是查了手册才知道的）</p>
+</li>
+<li><p><code>valueOf</code> ——–返回一个 Number 对象的基本数字值。</p>
+</li>
+</ul>
+<h3 id="对于Number对象的描述"><a href="#对于Number对象的描述" class="headerlink" title="对于Number对象的描述"></a>对于Number对象的描述</h3><p>在 <code>JavaScript</code> 中，数字是一种基本的数据类型。<code>JavaScript</code> 支持 <code>Number</code> 对象，该对象是原始数值的包装对象。在必要时，<code>JavaScript</code> 会自动地在原始数据和对象之间转换。构造函数 <code>Number()</code> 可以不与运算符 <code>new</code> 一起使用，而直接作为转化函数来使用。以这种方式调用 <code>Number()</code> 时，它会把自己的参数转化成一个数字，然后返回转换后的原始数值（或 <code>NaN</code>）。构造函数通常还用作 5 个有用的数字常量的占位符，这 5 个有用的数字常量分别是可表示的最大数、可表示的最小数、正无穷大、负无穷大和特殊的 <code>NaN</code> 值。 注意，这些值是构造函数 <code>Number()</code> 自身的属性，而不是单独的某个 <code>Number</code> 对象的属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var big = Number.MAX_VALUE //正解</span><br><span class="line"></span><br><span class="line">var n= new Number(2);</span><br><span class="line">var big = n.MAX_VALUE; //错误用法，这里的变量n是new了Number对象，所以这里的n是Number的一个构造函数，并不是Number对象，所以它没有MAX_VALUE这个属性</span><br></pre></td></tr></table></figure>
 
           
         
@@ -605,7 +759,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -613,6 +767,15 @@
 
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
@@ -859,7 +1022,7 @@
 
   <canvas></canvas>
   <script type="text/javascript">
-    document.getElementsByTagName('canvas')[0].style="position:absolute;top:0;bottom:0;left:0;right:0;width: 100%;height: 100%;pointer-events: none;z-index: -1;";
+    document.getElementsByTagName('canvas')[0].style="position:fixed;top:0;bottom:0;left:0;right:0;width: 100%;height: 100%;pointer-events: none;z-index: -1;";
     document.addEventListener('touchmove', function (e) {
                 e.preventDefault()
             })
@@ -884,7 +1047,7 @@
                 q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
                 while(q[1].x<w+f) d(q[0], q[1])
             }
-            function d(i,j){   
+            function d(i,j){
                 x.beginPath()
                 x.moveTo(i.x, i.y)
                 x.lineTo(j.x, j.y)
