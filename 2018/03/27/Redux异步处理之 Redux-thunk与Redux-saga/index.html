@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT, AmamiRyoin, 765pro, idolm@ster, 天海流影, 天海春香, 前端, web, nodejs, javascript, js, mongodb, 偶像大师" />
+  <meta name="keywords" content="React," />
 
 
 
@@ -81,13 +81,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="AmamiRyoin&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="Redux异步处理之 Redux-thunk与Redux-sagaRedux异步众所周知，redux中所有的dispatch都是同步的，而处理ajax或fetch之类的异步请求一般要分为三步。 Action:需要写三个action来处理——fetching、fetched、error这三步，请看代码：123&amp;#123; type:&amp;apos;FETCH_POSTS_REQUEST&amp;apos;&amp;#1">
+<meta name="keywords" content="React">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React杂谈之Immutable">
+<meta property="og:url" content="http://yoursite.com/2018/03/27/Redux异步处理之 Redux-thunk与Redux-saga/index.html">
 <meta property="og:site_name" content="AmamiRyoin&#39;s Blog">
+<meta property="og:description" content="Redux异步处理之 Redux-thunk与Redux-sagaRedux异步众所周知，redux中所有的dispatch都是同步的，而处理ajax或fetch之类的异步请求一般要分为三步。 Action:需要写三个action来处理——fetching、fetched、error这三步，请看代码：123&amp;#123; type:&amp;apos;FETCH_POSTS_REQUEST&amp;apos;&amp;#1">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-23T15:24:37.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AmamiRyoin&#39;s Blog">
+<meta name="twitter:title" content="React杂谈之Immutable">
+<meta name="twitter:description" content="Redux异步处理之 Redux-thunk与Redux-sagaRedux异步众所周知，redux中所有的dispatch都是同步的，而处理ajax或fetch之类的异步请求一般要分为三步。 Action:需要写三个action来处理——fetching、fetched、error这三步，请看代码：123&amp;#123; type:&amp;apos;FETCH_POSTS_REQUEST&amp;apos;&amp;#1">
 
 
 
@@ -117,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/27/Redux异步处理之 Redux-thunk与Redux-saga/"/>
 
 
 
 
 
-  <title>AmamiRyoin's Blog</title>
+  <title>React杂谈之Immutable | AmamiRyoin's Blog</title>
   
 
 
@@ -142,8 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -425,301 +429,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/13/日常Js学习汇总(2)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="AmamiRyoin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/headImg/headImg.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="AmamiRyoin's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/13/日常Js学习汇总(2)/" itemprop="url">日常Js学习汇总(2)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-13T16:30:45+08:00">
-                2018-04-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="日常Js学习汇总-2"><a href="#日常Js学习汇总-2" class="headerlink" title="日常Js学习汇总(2)"></a>日常Js学习汇总(2)</h1><p>最近搞项目改版，存在新老需求，这次就项目内遇到的一些问题和学习到的新知识做一个笔记。</p>
-<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h2><p>主要是设置<code>cookie</code>和删除<code>cookie</code>的问题，一般设置<code>cookie</code>可以如下设置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.cookie = `$&#123;&quot;cookie名&quot;&#125;=$&#123;&quot;cookie值&quot;&#125;;expires=$&#123;&quot;cookie生命时间&quot;&#125;;domain=$&#123;&quot;存储域名&quot;&#125;;path=$&#123;&quot;相对路径&quot;&#125;`;</span><br></pre></td></tr></table></figure>
-<p>或者用<code>jquery.cookie</code>这个库来设置(主要就是方便点，不用拼那么长字符串)，如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$.cookie(&quot;cookie名&quot;,&quot;cookie值&quot;,&#123;expires:&apos;cookie生命时间&apos;,domain:&apos;存储域名&apos;,path:&apos;相对路径&apos;&#125;);</span><br></pre></td></tr></table></figure>
-<p>实现上没什么难度，但是在项目中代码执行后偏偏没有在控制台中看到存入的cookie,很蛋疼。</p>
-<p>最后发现问题出在domain上。项目里是区分环境的，不同的环境存入不同的域名，其实这也不是问题，问题是我设置的是测试环境的域名，但是我看代码效果的时候去的是docker。。。。。瞬间感觉自己的智商被清零了。。。。。。主要还是当初试着在控制台里输入了上述代码，控制台里确实也存入了和当前域名不一样的域名的cookie，被这个坑惨了，而且至今都不知道为什么在控制台写可以存不同域名的cookie但是代码里就存不进去。</p>
-<h2 id="mescroll插件问题"><a href="#mescroll插件问题" class="headerlink" title="mescroll插件问题"></a>mescroll插件问题</h2><p>新需求中有个顶部下拉刷新，底部上拉加载的功能，这里使用了mescroll这个插件，demo示例如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">var mescroll = new MeScroll(&quot;mescroll&quot;, &#123;</span><br><span class="line">    down: &#123;</span><br><span class="line">        auto: false, //是否在初始化完毕之后自动执行下拉回调callback; 默认true</span><br><span class="line">        callback: downCallback //下拉刷新的回调</span><br><span class="line">    &#125;,</span><br><span class="line">    up: &#123;</span><br><span class="line">        auto: true, //是否在初始化时以上拉加载的方式自动加载第一页数据; 默认false</span><br><span class="line">        isBounce: false, //此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10</span><br><span class="line">        callback: upCallback, //上拉回调,此处可简写; 相当于 callback: function (page) &#123; upCallback(page); &#125;</span><br><span class="line">        toTop:&#123; //配置回到顶部按钮</span><br><span class="line">            src : &quot;../res/img/mescroll-totop.png&quot;, //默认滚动到1000px显示,可配置offset修改</span><br><span class="line">            //offset : 1000</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">function downCallback()&#123;</span><br><span class="line">    //联网加载数据</span><br><span class="line">    getListDataFromNet(0, 1, function(data)&#123;</span><br><span class="line">        //联网成功的回调,隐藏下拉刷新的状态</span><br><span class="line">        mescroll.endSuccess();</span><br><span class="line">        //设置列表数据</span><br><span class="line">        setListData(data, false);</span><br><span class="line">    &#125;, function()&#123;</span><br><span class="line">        //联网失败的回调,隐藏下拉刷新的状态</span><br><span class="line">        mescroll.endErr();</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line">function upCallback(page)&#123;</span><br><span class="line">    //联网加载数据</span><br><span class="line">    getListDataFromNet(page.num, page.size, function(curPageData)&#123;</span><br><span class="line">        //联网成功的回调,隐藏下拉刷新和上拉加载的状态;</span><br><span class="line">        //mescroll会根据传的参数,自动判断列表如果无任何数据,则提示空;列表无下一页数据,则提示无更多数据;</span><br><span class="line">        console.log(&quot;page.num=&quot;+page.num+&quot;, page.size=&quot;+page.size+&quot;, curPageData.length=&quot;+curPageData.length);</span><br><span class="line">        </span><br><span class="line">        //方法一(推荐): 后台接口有返回列表的总页数 totalPage</span><br><span class="line">        //mescroll.endByPage(curPageData.length, totalPage); //必传参数(当前页的数据个数, 总页数)</span><br><span class="line">        </span><br><span class="line">        //方法二(推荐): 后台接口有返回列表的总数据量 totalSize</span><br><span class="line">        //mescroll.endBySize(curPageData.length, totalSize); //必传参数(当前页的数据个数, 总数据量)</span><br><span class="line">        </span><br><span class="line">        //方法三(推荐): 您有其他方式知道是否有下一页 hasNext</span><br><span class="line">        //mescroll.endSuccess(curPageData.length, hasNext); //必传参数(当前页的数据个数, 是否有下一页true/false)</span><br><span class="line">        </span><br><span class="line">        //方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据,如果传了hasNext,则翻到第二页即可显示无更多数据.</span><br><span class="line">        mescroll.endSuccess(curPageData.length);</span><br><span class="line">        </span><br><span class="line">        //设置列表数据</span><br><span class="line">        setListData(curPageData, true);</span><br><span class="line">    &#125;, function()&#123;</span><br><span class="line">        //联网失败的回调,隐藏下拉刷新和上拉加载的状态;</span><br><span class="line">        mescroll.endErr();</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>示例代码中并没有什么问题，但是实际运用中由于要判断是否存在下一页的情况，这里就会使用到<code>mescroll.endSuccess</code>这个方法(接口数据中并没有返回total或是pageTotal);</p>
-<p>其实没有total或者pagetotal也不是什么大问题，完全可以通过pageSize来判断是否存在下一页数据，坑就坑在它的<code>加载中</code>这段标签也不是插件内部自动控制的，这个标签也需要用<code>mescroll.endSuccess</code>这个方法来进行判断，否则当前页加载完之后下次再拖到底部时就不会触发上拉加载方法。</p>
-<h2 id="微信小程序的支付功能跳转"><a href="#微信小程序的支付功能跳转" class="headerlink" title="微信小程序的支付功能跳转"></a>微信小程序的支付功能跳转</h2><p>由于这次需求中将m站和小程序搞在一起，准备将m站嵌在小程序的<code>web-view</code>中，然而这里有个问题，那就是支付功能，小程序内部不允许调用微信接口的支付功能，只能使用调用小程序自己的支付接口，这意味着原本m站的支付功能将失效，而如果调用小程序的支付接口那就必须从内嵌的m站页面中将参数传给小程序，所以后来就想了一个办法，通过<code>webview</code>跳转时的<code>url</code>把支付所需参数传给小程序，从而调用小程序的支付功能。</p>
-<p>具体实现是m站内部判断出当前环境是小程序还是h5页面，小程序则将支付所需参数通过调用小程序的跳转方法跳到一个空白的<code>web-veiw</code>上将url的参数带出，并在这个新的<code>web-view</code>上进行支付功能的实现，如果不是小程序就还是用原来的微信支付方式支付。小程序具体代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">onLoad: function (options) &#123;</span><br><span class="line">   var that = this;</span><br><span class="line">   //页面加载调取微信支付（原则上应该对options的携带的参数进行校验）</span><br><span class="line">   that.requestPayment(options);</span><br><span class="line"> &#125;,</span><br><span class="line">//根据 obj 的参数请求wx 支付</span><br><span class="line"> requestPayment: function (obj) &#123;</span><br><span class="line">   //获取options的订单Id</span><br><span class="line">   var orderId = obj.orderId;</span><br><span class="line">   //调起微信支付</span><br><span class="line">   wx.requestPayment(&#123;</span><br><span class="line">     //相关支付参数</span><br><span class="line">     &apos;timeStamp&apos;: obj.timestamp,</span><br><span class="line">     &apos;nonceStr&apos;: obj.nonceStr,</span><br><span class="line">     &apos;package&apos;: &apos;prepay_id=&apos; + obj.prepay_id,</span><br><span class="line">     &apos;signType&apos;: obj.signType,</span><br><span class="line">     &apos;paySign&apos;: obj.paySign,</span><br><span class="line">     //小程序微信支付成功的回调通知</span><br><span class="line">     &apos;success&apos;: function (res) &#123;</span><br><span class="line">       //定义小程序页面集合</span><br><span class="line">       var pages = getCurrentPages();</span><br><span class="line">       //当前页面 (wxpay page)</span><br><span class="line">       var currPage = pages[pages.length - 1];  </span><br><span class="line">       //上一个页面 （index page） </span><br><span class="line">       var prevPage = pages[pages.length - 2];  </span><br><span class="line">       //通过page.setData方法使index的webview 重新加载url  有点类似于后台刷新页面</span><br><span class="line">       //此处有点类似小程序通过加载URL的方式回调通知后端 该订单支付成功。后端逻辑不做赘述。</span><br><span class="line">         prevPage.setData(&#123;</span><br><span class="line">           url: &quot;https://xxxxxxxxxx.com/wx_isPayment.jhtml?orderId=&quot; + orderId  + &apos;&amp;ispay=0&apos;,</span><br><span class="line">           </span><br><span class="line">         &#125;),</span><br><span class="line">         //小程序主动返回到上一个页面。即从wxpay page到index page。此时index page的webview已经重新加载了url 了</span><br><span class="line">         //微信小程序的page 也有栈的概念navigateBack 相当于页面出栈的操作</span><br><span class="line">         wx.navigateBack(); </span><br><span class="line">     &#125;,</span><br><span class="line">     //小程序支付失败的回调通知</span><br><span class="line">     &apos;fail&apos;: function (res) &#123;</span><br><span class="line">       console.log(&quot;支付失败&quot;),</span><br><span class="line">         console.log(res)</span><br><span class="line">         var pages=getCurrentPages();</span><br><span class="line">         var currPage = pages[pages.length - 1];   </span><br><span class="line">         var prevPage = pages[pages.length - 2];  </span><br><span class="line">         console.log(&quot;准备修改数据&quot;)</span><br><span class="line">         prevPage.setData(&#123;</span><br><span class="line">           url: &quot;https://xxxxxxxxxx/wx_isPayment.jhtml?orderId=&quot; + orderId + &apos;&amp;ispay=0&apos; ,</span><br><span class="line">         &#125;),</span><br><span class="line">           console.log(&quot;准备结束页面&quot;)</span><br><span class="line">       wx.navigateBack(); </span><br><span class="line">     &#125;</span><br><span class="line">   &#125;)</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<p>以上就是这次项目中所获取的经验。</p>
-<p>edit by AmamiRyoin</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/React杂谈之Immutable/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="AmamiRyoin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/headImg/headImg.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="AmamiRyoin's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/27/React杂谈之Immutable/" itemprop="url">React杂谈之Immutable</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-27T14:23:07+08:00">
-                2018-03-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="React杂谈之Immutable-js"><a href="#React杂谈之Immutable-js" class="headerlink" title="React杂谈之Immutable.js"></a>React杂谈之Immutable.js</h1><h2 id="Immutable-js是什么，有何意义"><a href="#Immutable-js是什么，有何意义" class="headerlink" title="Immutable.js是什么，有何意义"></a>Immutable.js是什么，有何意义</h2><p><code>immutable</code>从英文翻译过来叫做<code>不可改变的</code>，所以<code>Immutable.js</code>就是用来生成不可变的数据的。</p>
-<h3 id="Javascript的缺陷"><a href="#Javascript的缺陷" class="headerlink" title="Javascript的缺陷"></a>Javascript的缺陷</h3><p>众所周知在javascript中，对象一般是可变的，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let foo=&#123;a: 1&#125;; </span><br><span class="line">let bar=foo; </span><br><span class="line">bar.a=2;</span><br><span class="line">console.log(foo.a)  // 2</span><br></pre></td></tr></table></figure></p>
-<p>这里可以看出foo的a属性其实也跟着bar中的a属性发生了改变。</p>
-<h3 id="Immutable的定义"><a href="#Immutable的定义" class="headerlink" title="Immutable的定义"></a>Immutable的定义</h3><p>这里就直接引用官方的原话了：</p>
-<p>Immutable 就是一旦创建，就不能再被更改的数据。对 Immutable 对象的任何修改或添加删除操作都会返回一个新的 Immutable 对象。Immutable 实现的原理是 Persistent Data Structure（持久化数据结构），也就是使用旧数据创建新数据时，要保证旧数据同时可用且不变。同时为了避免 deepCopy 把所有节点都复制一遍带来的性能损耗，Immutable 使用了 Structural Sharing（结构共享），即如果对象树中一个节点发生变化，只修改这个节点和受它影响的父节点，其它节点则进行共享。</p>
-<p>那如果通过immutable来对对象进行操作会怎样呢，下面来看代码以便于更好地理解上面一段话：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import Immutable from &apos;immutable&apos;;</span><br><span class="line">let foo = Immutable.Object(&#123;a:1&#125;);</span><br><span class="line">let bar = foo.set(&apos;a&apos;,2);   // 定义一个bar变量，并且将一个新的Immutable返回给它</span><br><span class="line">console.log(foo.get(&apos;a&apos;));    // 获取foo对象(Immutable)的a属性，结果是1</span><br></pre></td></tr></table></figure></p>
-<p>从上面的代码可以看出虽然赋值给bar的时候对foo进行了修改操作，但是foo中的属性值并没有发生变化，这也就印证了上述所说‘Immutable 就是一旦创建，就不能再被更改的数据。对 Immutable 对象的任何修改或添加删除操作都会返回一个新的 Immutable 对象’的这句话。</p>
-<h3 id="Immutable的意义"><a href="#Immutable的意义" class="headerlink" title="Immutable的意义"></a>Immutable的意义</h3><p>那么说了这么多，这个Immutable的意义究竟在哪里。这里主要分为以下几点：</p>
-<ul>
-<li><p>Immutable 降低了 Mutable 带来的复杂度</p>
-<p>  可变（Mutable）数据耦合了 Time 和 Value 的概念，造成了数据很难被回溯。</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function touchAndLog(touchFn) &#123;</span><br><span class="line">    let data = &#123; key: &apos;value&apos; &#125;;</span><br><span class="line">    touchFn(data);</span><br><span class="line">    console.log(data.key);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  在上述代码中你不可能知道到底会打印出什么，因为我们无法确定touchFn对data到底做了哪些操作。那如果这个data是个Immutable类型的数据呢，毫无疑问打印出来是<code>value</code>。</p>
-</li>
-<li><p>节省内存</p>
-<p>  Immutable.js 使用了 Structure Sharing 会尽量复用内存，甚至以前使用的对象也可以再次被复用。没有被引用的对象会被垃圾回收。</p>
-</li>
-<li><p>可以做到对于数据应用的时间旅行等功能</p>
-<p>  因为每次数据都是不一样的，只要把这些数据放到一个数组里储存起来，想回退到哪里就拿出对应数据即可，很容易开发出撤销重做这种功能。</p>
-</li>
-<li><p>函数式编程</p>
-<p>  Immutable 本身就是函数式编程中的概念，纯函数式编程比面向对象更适用于前端开发。因为只要输入一致，输出必然一致，这样开发的组件更易于调试和组装。</p>
-</li>
-</ul>
-<h2 id="与React全家桶摩擦出的火花"><a href="#与React全家桶摩擦出的火花" class="headerlink" title="与React全家桶摩擦出的火花"></a>与React全家桶摩擦出的火花</h2><h3 id="在React中使用Immutable的好处"><a href="#在React中使用Immutable的好处" class="headerlink" title="在React中使用Immutable的好处"></a>在React中使用Immutable的好处</h3><p>其实下面这张图更方便理解：</p>
-<p><img src="/images/immutable1.gif" alt="Immutable"></p>
-<p>当数据发生改变的时候，只有关联节点会被修改，其他节点则会被复制一份，最终产生一个新的数据树；</p>
-<p>由于react中我们只要执行了this.setState()方法，不管state的值是否发生变化都会重新执行一遍render方法进行重新渲染，所以在react中有一个名为<code>shouldComponentUpdate</code>的钩子函数，它会根据你返回的布尔值来进行判断是否重新进行渲染，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">class CounterButton extends React.Component &#123;</span><br><span class="line">  constructor(props) &#123;</span><br><span class="line">    super(props);</span><br><span class="line">    this.state = &#123;count: 1&#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  shouldComponentUpdate(nextProps, nextState) &#123;</span><br><span class="line">    if (this.props.color !== nextProps.color) &#123;</span><br><span class="line">      return true;</span><br><span class="line">    &#125;</span><br><span class="line">    if (this.state.count !== nextState.count) &#123;</span><br><span class="line">      return true;</span><br><span class="line">    &#125;</span><br><span class="line">    return false;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;button</span><br><span class="line">        color=&#123;this.props.color&#125;</span><br><span class="line">        onClick=&#123;() =&gt; this.setState(state =&gt; (&#123;count: state.count + 1&#125;))&#125;&gt;</span><br><span class="line">        Count: &#123;this.state.count&#125;</span><br><span class="line">      &lt;/button&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>上面的代码是官方给的例子，然而可以看出来如果state结构异常复杂的话(<code>比如对象的嵌套</code>)这种比较是没有用的，这里存在着浅比较的问题这个钩子函数也会相应的变得复杂。(这里不明白的话可以去看<code>shouldComponentUpdate</code>的源码，对于嵌套对象的比较是用的<code>Object.is()</code>方法进行的比较)</p>
-<p>对于这种情况，immutable就是一个非常好的解决方案，由于immutable的不可变性，我们可以非常轻松的在<code>shouldComponentUpdate</code>中进行<code>prevProps</code>和<code>nextProps</code>的比较。</p>
-<p>Immutable中提供is()方法来进行Immutable对象间的比较,它比较的是两个对象的 hashCode 或 valueOf，由于<code>Immutable</code>内部使用了 Trie 数据结构来存储，只要两个对象的 hashCode 相等，值就是一样的。这样的算法避免了深度遍历比较，性能非常好。</p>
-<h3 id="Immutable与Redux摩擦出的火花"><a href="#Immutable与Redux摩擦出的火花" class="headerlink" title="Immutable与Redux摩擦出的火花"></a>Immutable与Redux摩擦出的火花</h3><p>综上所述，为了避免浅比较存在的问题并且能够在redux数据流中进行react的渲染优化，我们可以将Immutable引入进来，引入Immutable就意味着要修改原本的数据结构类型，这就意味着我们要修改Action和Reducer以及组件中所有用到state的地方（工作量稍微有点庞大）,对于<code>Reducer</code>的修改    这里可以引入<code>redux-immutable</code>这个库。</p>
-<p>修改后的代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//store.js</span><br><span class="line"></span><br><span class="line">import &#123; createStore &#125; from &apos;redux&apos;;</span><br><span class="line">import &#123; combineReducers &#125; from &apos;redux-immutablejs&apos;;</span><br><span class="line"></span><br><span class="line">import Immutable from &apos;immutable&apos;;</span><br><span class="line">import * as reducers from &apos;./reducers&apos;;</span><br><span class="line"></span><br><span class="line">const reducer = combineReducers(reducers);</span><br><span class="line">const state = Immutable.fromJS(&#123;&#125;);</span><br><span class="line"></span><br><span class="line">const store = reducer(state);</span><br><span class="line">export default createStore(reducer, store);</span><br><span class="line">`</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//reducers.js</span><br><span class="line"></span><br><span class="line">import &#123; createReducer &#125; from &apos;redux-immutablejs&apos;</span><br><span class="line">const initialState = Immutable.fromJS(&#123; isAuth: false &#125;)</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Reducer domain that handles authentication &amp; authorization.</span><br><span class="line"> **/</span><br><span class="line">export default createReducer(initialState, &#123;</span><br><span class="line">  [LOGIN]: (state, action) =&gt; state.merge(&#123;</span><br><span class="line">    isAuth: true,</span><br><span class="line">    token: action.payload.token</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//container.js</span><br><span class="line"></span><br><span class="line">const mapStateToProps = state =&gt; (&#123;</span><br><span class="line">    todos: state.get(&apos;todos&apos;).get(&apos;items&apos;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">const mapDispatchToProps = dispatch =&gt; (&#123;</span><br><span class="line">    actions: bindActionCreators(TodoActions, dispatch)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">export default connect(</span><br><span class="line">    mapStateToProps,</span><br><span class="line">    mapDispatchToProps</span><br><span class="line">)(App)</span><br></pre></td></tr></table></figure>
-<p>对于container你也可以直接映射一个Immutable对象给state，通过get方法传递到元素中去，这里随便个人的喜好了。</p>
-<h2 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h2><p>edit by AmamiRyoin</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
 
   
 
@@ -749,9 +461,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/27/Redux异步处理之 Redux-thunk与Redux-saga/" itemprop="url">React杂谈之Immutable</a></h1>
+          <h1 class="post-title" itemprop="name headline">React杂谈之Immutable</h1>
         
 
         <div class="post-meta">
@@ -801,9 +511,7 @@
       
 
       
-        
-          
-            <h1 id="Redux异步处理之-Redux-thunk与Redux-saga"><a href="#Redux异步处理之-Redux-thunk与Redux-saga" class="headerlink" title="Redux异步处理之 Redux-thunk与Redux-saga"></a>Redux异步处理之 Redux-thunk与Redux-saga</h1><h2 id="Redux异步"><a href="#Redux异步" class="headerlink" title="Redux异步"></a>Redux异步</h2><p>众所周知，redux中所有的dispatch都是同步的，而处理ajax或fetch之类的异步请求一般要分为三步。</p>
+        <h1 id="Redux异步处理之-Redux-thunk与Redux-saga"><a href="#Redux异步处理之-Redux-thunk与Redux-saga" class="headerlink" title="Redux异步处理之 Redux-thunk与Redux-saga"></a>Redux异步处理之 Redux-thunk与Redux-saga</h1><h2 id="Redux异步"><a href="#Redux异步" class="headerlink" title="Redux异步"></a>Redux异步</h2><p>众所周知，redux中所有的dispatch都是同步的，而处理ajax或fetch之类的异步请求一般要分为三步。</p>
 <h3 id="Action"><a href="#Action" class="headerlink" title="Action:"></a>Action:</h3><p>需要写三个action来处理——fetching、fetched、error这三步，请看代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123; type:&apos;FETCH_POSTS_REQUEST&apos;&#125;//发起请求</span><br><span class="line">&#123; type:&apos;FETCH_POSTS_FAILURE&apos;, payload: &apos;errorInfo&apos; &#125;//请求失败</span><br><span class="line">&#123; type:&apos;FETCH_POSTS_SUCCESS&apos;, payload:&#123;data&#125;//请求成功并且获取到数据</span><br></pre></td></tr></table></figure></p>
 <h3 id="Reducer"><a href="#Reducer" class="headerlink" title="Reducer:"></a>Reducer:</h3><p>同样需要写三个对应的reduce来进行对state的处理以及合并，代码如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">let reducer = (state = initialState, action) =&gt; &#123;</span><br><span class="line">	switch(action.type) &#123;</span><br><span class="line">		//发起请求时reducer的处理</span><br><span class="line">		case &apos;FETCH_POSTS_REQUEST&apos;: &#123;</span><br><span class="line">			return &#123;...state, fetching: true&#125;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">		//请求失败时的处理</span><br><span class="line">		case &apos;FETCH_POSTS_FAILURE&apos;: &#123;</span><br><span class="line">			return &#123;...state, fetching: false, error: action.payload&#125;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">		//请求成功</span><br><span class="line">		case &apos;FETCH_POSTS_SUCCESS&apos;: &#123;</span><br><span class="line">			return &#123;...state, fetching: false, fetched: true, users: action.payload&#125;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return state;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -872,8 +580,6 @@
 </ul>
 <p>Edit by 张真欣</p>
 
-          
-        
       
     </div>
     
@@ -883,301 +589,69 @@
     
 
     
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>觉得不错的话可以打赏哦</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="AmamiRyoin 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
 
     
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/24/HTML与Css小技巧(1)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="AmamiRyoin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/headImg/headImg.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="AmamiRyoin's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/24/HTML与Css小技巧(1)/" itemprop="url">HTML与Css小技巧(1)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-24T22:00:30+08:00">
-                2018-03-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/React/" rel="tag"># React</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="HTML与Css小技巧-1"><a href="#HTML与Css小技巧-1" class="headerlink" title="HTML与Css小技巧(1)"></a>HTML与Css小技巧(1)</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>俗话说能用css解决的问题千万别用js，这里主要就给各位大佬介绍下不常用的或者说是新奇的css小技巧。</p>
-<h3 id="css-混合模式"><a href="#css-混合模式" class="headerlink" title="css 混合模式"></a>css 混合模式</h3><p>熟悉PS的人应该都知道混合模式，实际上在<code>canvas</code>和<code>svg</code>中也有涉及，而在<code>css</code>中混合模式被称为<code>mix-blend-mode</code>，属性如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">mix-blend-mode： normal;          //正常</span><br><span class="line">mix-blend-mode： multiply;        //正片叠底</span><br><span class="line">mix-blend-mode： screen;          //滤色</span><br><span class="line">mix-blend-mode： overlay;         //叠加</span><br><span class="line">mix-blend-mode： darken;          //变暗</span><br><span class="line">mix-blend-mode： lighten;         //变亮</span><br><span class="line">mix-blend-mode： color-dodge;     //颜色减淡</span><br><span class="line">mix-blend-mode： color-burn;      //颜色加深</span><br><span class="line">mix-blend-mode： hard-light;      //强光</span><br><span class="line">mix-blend-mode： soft-light;      //柔光</span><br><span class="line">mix-blend-mode： difference;      //差值</span><br><span class="line">mix-blend-mode： exclusion;       //排除</span><br><span class="line">mix-blend-mode： hue;             //色相</span><br><span class="line">mix-blend-mode： saturation;      //饱和度</span><br><span class="line">mix-blend-mode： color;           //颜色</span><br><span class="line">mix-blend-mode： luminosity;      //亮度</span><br><span class="line"></span><br><span class="line">mix-blend-mode： initial;         //初始</span><br><span class="line">mix-blend-mode： inherit;         //继承</span><br><span class="line">mix-blend-mode： unset;           //复原</span><br></pre></td></tr></table></figure>
-<p>额，具体的什么效果我就不说了，程序员当然都是直接上代码啊！</p>
-<p><div class="blend"><h4>请选择以下选项改变mix-blend-mode属性<br>    <select><br>        <option value="normal" selected>normal-正常</option><br>        <option value="multiply">multiply-正片叠底</option><br>        <option value="screen">screen-滤色</option><br>        <option value="overlay">overlay-叠加</option><br>        <option value="darken">darken-变暗</option><br>        <option value="lighten">lighten-变亮</option><br>        <option value="color-dodge">color-dodge-颜色减淡</option><br>        <option value="color-burn">color-burn-颜色加深</option><br>        <option value="hard-light">hard-light-强光</option><br>        <option value="soft-light">soft-light-柔光</option><br>        <option value="difference">difference-差值(</option><br>        <option value="exclusion">exclusion-排除</option><br>        <option value="hue">hue-色相</option><br>        <option value="saturation">saturation-饱和度</option><br>        <option value="color">color-颜色</option><br>        <option value="luminosity">luminosity-亮度</option><br>        <option value="initial">initial-初始</option><br>        <option value="inherit">inherit-继承</option><br>        <option value="unset">unset-复原</option><br>    </select><br></h4></div></p>
-<p><style>.blend {width:100%;height:717px;background: url(/images/haruka_mana.jpg) no-repeat left top, url(/images/765pro.jpg) no-repeat left bottom;}</style></p>
-<script type="text/javascript">if (window.addEventListener) {var eleBox = document.getElementsByClassName("blend")[0], eleSelect;if (eleBox && (eleSelect = eleBox.querySelector("select"))) {eleSelect.addEventListener("change", function() {eleBox.style.backgroundBlendMode = this.value;});}}</script>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
       
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/24/日常Js学习汇总(1)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="AmamiRyoin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/headImg/headImg.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="AmamiRyoin's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/24/日常Js学习汇总(1)/" itemprop="url">日常Js学习汇总(1)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-24T16:07:25+08:00">
-                2018-03-24
-              </time>
+              <a href="/2018/03/24/HTML与Css小技巧(1)/" rel="next" title="HTML与Css小技巧(1)">
+                <i class="fa fa-chevron-left"></i> HTML与Css小技巧(1)
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
+              <a href="/2018/03/27/React杂谈之Immutable/" rel="prev" title="React杂谈之Immutable">
+                React杂谈之Immutable <i class="fa fa-chevron-right"></i>
+              </a>
             
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h1 id="日常Js学习汇总-1"><a href="#日常Js学习汇总-1" class="headerlink" title="日常Js学习汇总(1)"></a>日常Js学习汇总(1)</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>去年11月份本来就打算开始写博客的结果拖到现在，也是服了自己的执行力了，不过总算也是开始写起来了。如果觉得写的不错，各位看官还请打个赏呗#滑稽<br>上个月刚跳槽换公司，面试时候出的笔试题当初做的一脸懵逼啊，倒不是说难，反而可以说是太基础，基础到平时大家都不会怎么去用（只是以我个人的观点来看，我承认自己基本功不是很扎实#流下了弱者的泪水），这里就凭着本人不算强的记忆力，把这些题目分享下。</p>
-<h3 id="Js基础之Number对象"><a href="#Js基础之Number对象" class="headerlink" title="Js基础之Number对象"></a>Js基础之Number对象</h3><p>Number 对象是原始数值的包装对象。</p>
-<h4 id="创建-Number-对象的语法："><a href="#创建-Number-对象的语法：" class="headerlink" title="创建 Number 对象的语法："></a>创建 Number 对象的语法：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var myNum=new Number(value);</span><br><span class="line">var myNum=Number(value);</span><br></pre></td></tr></table></figure>
-<h5 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h5><p>参数 <code>value</code> 是要创建的 Number 对象的数值，或是要转换成数字的值。</p>
-<h5 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h5><p>当 Number() 和运算符 new 一起作为构造函数使用时，它返回一个新创建的 Number 对象。如果不用 new 运算符，把 Number() 作为一个函数来调用，它将把自己的参数转换成一个原始的数值，并且返回这个值（如果转换失败，则返回 NaN）。</p>
-<h3 id="Number-对象属性"><a href="#Number-对象属性" class="headerlink" title="Number 对象属性"></a>Number 对象属性</h3><ul>
-<li><p><code>constructor</code> ——–返回对此对象的 Number 函数的引用。</p>
-</li>
-<li><p><code>MAX_VALUE</code> ——–表示的最大的数。</p>
-</li>
-<li><p><code>Min_VALUE</code> ——–表示的最小的数。</p>
-</li>
-<li><p><code>NaN</code> ——–非数字值。(可以理解为Not a Number)</p>
-</li>
-<li><p><code>NEGATIVE_INFINITY</code> ——–负无穷大，溢出时返回该值。</p>
-</li>
-<li><p><code>POSITIVE_INFINITY</code> ——–正无穷大，溢出时返回该值。</p>
-</li>
-<li><p><code>prototype</code> ———原型。</p>
-</li>
-</ul>
-<h3 id="Number-对象方法"><a href="#Number-对象方法" class="headerlink" title="Number 对象方法"></a>Number 对象方法</h3><ul>
-<li><p><code>toString</code> ———把数字转换为字符串，使用指定的基数。</p>
-</li>
-<li><p><code>toLocaleString</code> ——–把数字转换为字符串，使用本地数字格式顺序。</p>
-</li>
-<li><p><code>toFixed</code> ——–把数字转换为字符串，结果的小数点后有指定位数的数字。</p>
-</li>
-<li><p><code>toExponential</code> ——–把对象的值转换为指数计数法。(这个不查手册还真不知道还有这种方法)</p>
-</li>
-<li><p><code>toPrecision</code> ——–把数字格式化为指定的长度。（这个也是查了手册才知道的）</p>
-</li>
-<li><p><code>valueOf</code> ——–返回一个 Number 对象的基本数字值。</p>
-</li>
-</ul>
-<h3 id="对于Number对象的描述"><a href="#对于Number对象的描述" class="headerlink" title="对于Number对象的描述"></a>对于Number对象的描述</h3><p>在 <code>JavaScript</code> 中，数字是一种基本的数据类型。<code>JavaScript</code> 支持 <code>Number</code> 对象，该对象是原始数值的包装对象。在必要时，<code>JavaScript</code> 会自动地在原始数据和对象之间转换。构造函数 <code>Number()</code> 可以不与运算符 <code>new</code> 一起使用，而直接作为转化函数来使用。以这种方式调用 <code>Number()</code> 时，它会把自己的参数转化成一个数字，然后返回转换后的原始数值（或 <code>NaN</code>）。构造函数通常还用作 5 个有用的数字常量的占位符，这 5 个有用的数字常量分别是可表示的最大数、可表示的最小数、正无穷大、负无穷大和特殊的 <code>NaN</code> 值。 注意，这些值是构造函数 <code>Number()</code> 自身的属性，而不是单独的某个 <code>Number</code> 对象的属性。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var big = Number.MAX_VALUE //正解</span><br><span class="line"></span><br><span class="line">var n= new Number(2);</span><br><span class="line">var big = n.MAX_VALUE; //错误用法，这里的变量n是new了Number对象，所以这里的n是Number的一个构造函数，并不是Number对象，所以它没有MAX_VALUE这个属性</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -1187,10 +661,37 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
 
 
           </div>
@@ -1198,6 +699,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -1218,8 +723,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -1297,6 +811,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redux异步处理之-Redux-thunk与Redux-saga"><span class="nav-number">1.</span> <span class="nav-text">Redux异步处理之 Redux-thunk与Redux-saga</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redux异步"><span class="nav-number">1.1.</span> <span class="nav-text">Redux异步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Action"><span class="nav-number">1.1.1.</span> <span class="nav-text">Action:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reducer"><span class="nav-number">1.1.2.</span> <span class="nav-text">Reducer:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何进行dispatch"><span class="nav-number">1.1.3.</span> <span class="nav-text">如何进行dispatch</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#applyMiddleware："><span class="nav-number">1.1.3.1.</span> <span class="nav-text">applyMiddleware：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#compose："><span class="nav-number">1.1.3.2.</span> <span class="nav-text">compose：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#creatStore："><span class="nav-number">1.1.3.3.</span> <span class="nav-text">creatStore：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#认识Redux-thunk"><span class="nav-number">1.2.</span> <span class="nav-text">认识Redux-thunk</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#完整代码"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">完整代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#认识Redux-saga"><span class="nav-number">1.3.</span> <span class="nav-text">认识Redux-saga</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方法"><span class="nav-number">1.3.1.</span> <span class="nav-text">使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#put"><span class="nav-number">1.3.1.0.1.</span> <span class="nav-text">put</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#call"><span class="nav-number">1.3.1.0.2.</span> <span class="nav-text">call</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redux-saga优点"><span class="nav-number">1.3.2.</span> <span class="nav-text">Redux-saga优点</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1437,6 +967,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
