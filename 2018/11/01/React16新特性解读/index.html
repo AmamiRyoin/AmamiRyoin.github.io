@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="React,Javascript," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="AmamiRyoin's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="React16新特性解读这两天逛推特的时候偶然关注了一下某前端大佬，进而发现了react团队的Dan的推特(我的微信头像，帅的一批)，又进而发现react16更新了新的特性（表示已经很久没有关注过前端的技术趋势了），感觉新特性还是比较有意思的，所以写个blog来记录下，以下内容均为官网内容的整理和个人的总结，如有不对的地方欢迎指正。 这里分两块分析  Hooks 与redux的运用(useRedu">
+<meta name="keywords" content="React,Javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React16新特性解读">
+<meta property="og:url" content="http://yoursite.com/2018/11/01/React16新特性解读/index.html">
+<meta property="og:site_name" content="AmamiRyoin&#39;s Blog">
+<meta property="og:description" content="React16新特性解读这两天逛推特的时候偶然关注了一下某前端大佬，进而发现了react团队的Dan的推特(我的微信头像，帅的一批)，又进而发现react16更新了新的特性（表示已经很久没有关注过前端的技术趋势了），感觉新特性还是比较有意思的，所以写个blog来记录下，以下内容均为官网内容的整理和个人的总结，如有不对的地方欢迎指正。 这里分两块分析  Hooks 与redux的运用(useRedu">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1457831-b19e007758f57df7?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1457831-1b8e3c5ce88f7758?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp">
+<meta property="og:updated_time" content="2018-11-03T09:10:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React16新特性解读">
+<meta name="twitter:description" content="React16新特性解读这两天逛推特的时候偶然关注了一下某前端大佬，进而发现了react团队的Dan的推特(我的微信头像，帅的一批)，又进而发现react16更新了新的特性（表示已经很久没有关注过前端的技术趋势了），感觉新特性还是比较有意思的，所以写个blog来记录下，以下内容均为官网内容的整理和个人的总结，如有不对的地方欢迎指正。 这里分两块分析  Hooks 与redux的运用(useRedu">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1457831-b19e007758f57df7?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/01/React16新特性解读/"/>
+
+
+
+
+
+  <title>React16新特性解读 | AmamiRyoin's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AmamiRyoin's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">守得云开见月明</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+      <!-- 自定义High一下的功能 -->
+      <li class="menu-item"> <a title="把这个链接拖到你的工具栏中,任何网页都可以High" href='javascript:(
+    function go() {
+
+
+    var songs = [
+        "/music/ashita.mp3",
+        "/music/lemon.mp3",
+    ];
+
+    function c() {
+        var e = document.createElement("link");
+        e.setAttribute("type", "text/css");
+        e.setAttribute("rel", "stylesheet");
+        e.setAttribute("href", f);
+        e.setAttribute("class", l);
+        document.body.appendChild(e)
+    }
+ 
+    function h() {
+        var e = document.getElementsByClassName(l);
+        for (var t = 0; t < e.length; t++) {
+            document.body.removeChild(e[t])
+        }
+    }
+ 
+    function p() {
+        var e = document.createElement("div");
+        e.setAttribute("class", a);
+        document.body.appendChild(e);
+        setTimeout(function() {
+            document.body.removeChild(e)
+        }, 100)
+    }
+ 
+    function d(e) {
+        return {
+            height : e.offsetHeight,
+            width : e.offsetWidth
+        }
+    }
+ 
+    function v(i) {
+        var s = d(i);
+        return s.height > e && s.height < n && s.width > t && s.width < r
+    }
+ 
+    function m(e) {
+        var t = e;
+        var n = 0;
+        while (!!t) {
+            n += t.offsetTop;
+            t = t.offsetParent
+        }
+        return n
+    }
+ 
+    function g() {
+        var e = document.documentElement;
+        if (!!window.innerWidth) {
+            return window.innerHeight
+        } else if (e && !isNaN(e.clientHeight)) {
+            return e.clientHeight
+        }
+        return 0
+    }
+ 
+    function y() {
+        if (window.pageYOffset) {
+            return window.pageYOffset
+        }
+        return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+    }
+ 
+    function E(e) {
+        var t = m(e);
+        return t >= w && t <= b + w
+    }
+
+    function S() {
+        var e = document.getElementById("audio_element_id");
+        if(e != null){
+            var index = parseInt(e.getAttribute("curSongIndex"));
+            if(index > songs.length - 2) {
+                index = 0;
+            } else {
+                index++;
+            }
+            e.setAttribute("curSongIndex", index);
+            N();
+        }
+
+        e.src = i;
+        e.play()
+    }
+ 
+    function x(e) {
+        e.className += " " + s + " " + o
+    }
+ 
+    function T(e) {
+        e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+    }
+ 
+    function N() {
+        var e = document.getElementsByClassName(s);
+        var t = new RegExp("\\b" + s + "\\b");
+        for (var n = 0; n < e.length; ) {
+            e[n].className = e[n].className.replace(t, "")
+        }
+    }
+
+    function initAudioEle() {
+        var e = document.getElementById("audio_element_id");
+        if(e === null){
+            e = document.createElement("audio");
+            e.setAttribute("class", l);
+            e.setAttribute("curSongIndex", 0);
+            e.id = "audio_element_id";
+            e.loop = false;
+            e.bgcolor = 0;
+            e.addEventListener("canplay", function() {
+            setTimeout(function() {
+                x(k)
+            }, 500);
+            setTimeout(function() {
+                N();
+                p();
+                for (var e = 0; e < O.length; e++) {
+                    T(O[e])
+                }
+            }, 15500)
+        }, true);
+        e.addEventListener("ended", function() {
+            N();
+            h();
+            go();
+        }, true);
+        e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+        document.body.appendChild(e);
+        }
+    }
+    
+    initAudioEle();
+    var e = 30;
+    var t = 30;
+    var n = 350;
+    var r = 350;
+
+    var curSongIndex = parseInt(document.getElementById("audio_element_id").getAttribute("curSongIndex"));
+    var i = songs[curSongIndex];
+    
+    var s = "mw-harlem_shake_me";
+    var o = "im_first";
+    var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+    var a = "mw-strobe_light";
+
+    /* harlem-shake-style.css，替换成你的位置，也可以直接使用：//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css */
+    var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+    
+    var l = "mw_added_css";
+    var b = g();
+    var w = y();
+    var C = document.getElementsByTagName("*");
+    var k = null;
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            if (E(A)) {
+                k = A;
+                break
+            }
+        }
+    }
+    if (A === null) {
+        console.warn("Could not find a node of the right size. Please try a different page.");
+        return
+    }
+    c();
+    S();
+    var O = [];
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            O.push(A)
+        }
+    }
+    })()'><i class="menu-item-icon fa fa-music fa-fw"></i>High一下</a> </li>
+      <!-- end High一下 -->
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/01/React16新特性解读/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AmamiRyoin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/headImg/headImg.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AmamiRyoin's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">React16新特性解读</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-01T16:15:01+08:00">
+                2018-11-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="React16新特性解读"><a href="#React16新特性解读" class="headerlink" title="React16新特性解读"></a>React16新特性解读</h1><p>这两天逛推特的时候偶然关注了一下某前端大佬，进而发现了react团队的Dan的推特(我的微信头像，帅的一批)，又进而发现react16更新了新的特性（表示已经很久没有关注过前端的技术趋势了），感觉新特性还是比较有意思的，所以写个blog来记录下，<code>以下内容均为官网内容的整理和个人的总结，如有不对的地方欢迎指正</code>。</p>
+<p>这里分两块分析</p>
+<ul>
+<li><strong><a href="#hooks">Hooks</a></strong></li>
+<li><strong><a href="#redux">与redux的运用(useReducer)</a></strong></li>
+</ul>
+<h2 id="Hooks"><a href="#Hooks" class="headerlink" title="Hooks"></a><div id="hooks">Hooks</div></h2><p>这次的新特性是Hooks(钩子)。什么是钩子函数，我的理解是触发某种条件就会触发的函数。</p>
+<p>钩子函数的运用其实是很广泛的，react中的生命周期函数其实都是钩子函数。这次的新特性中Hooks分了两种，一种叫做Basic Hooks基本钩子函数,另一种叫做Additional Hooks额外钩子函数,<code>Hooks只能用在函数式组件中，而不能用在类组件中</code>。</p>
+<h3 id="Basic-Hooks"><a href="#Basic-Hooks" class="headerlink" title="Basic Hooks"></a>Basic Hooks</h3><p>有以下几种:</p>
+<ul>
+<li>useState</li>
+<li>useEffect</li>
+<li>useContext</li>
+</ul>
+<h4 id="useState"><a href="#useState" class="headerlink" title="useState"></a>useState</h4><p>useState这个钩子取代了之前的setState方法以及对this.state的定义，这意味着<code>你将不再需要在constructor里写this.state和使用setState方法</code>。<br>另外官方文档中说道你可以多次使用这些钩子函数，也就是说一个function里面你可以写多个useState和useEffect</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function Counter() &#123;</span><br><span class="line">    //第一个参数代表默认值，它将赋给count，setCount则会取到一个更新方法</span><br><span class="line">    //（有个疑问，如果我有多个state参数，那么我是用一个对象包起来呢，还是说写多个useState钩子。。。。）</span><br><span class="line">    const [count, setCount] = useState(0);</span><br><span class="line">    return (</span><br><span class="line">        &lt;&gt;</span><br><span class="line">            Count: &#123;count&#125;</span><br><span class="line">            &lt;button onClick=&#123;() =&gt; setCount(0)&#125;&gt;Reset&lt;/button&gt;</span><br><span class="line">            &lt;button onClick=&#123;() =&gt; setCount(count =&gt; count + 1)&#125;&gt;+&lt;/button&gt;</span><br><span class="line">            &lt;button onClick=&#123;() =&gt; setCount(count =&gt; count - 1)&#125;&gt;-&lt;/button&gt;</span><br><span class="line">        &lt;/&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="useEffect"><a href="#useEffect" class="headerlink" title="useEffect"></a>useEffect</h4><p>useEffect这个钩子是生命周期函数ComponentDidMount和ComponentDidUpdate的替代，在这个钩子中你可以写对state的操作。<br>官方说只要是render之后都会走这个钩子。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function Example() &#123;</span><br><span class="line">    const [count, setCount] = useState(0);</span><br><span class="line">    useEffect(() =&gt; &#123;</span><br><span class="line">        // Update the document title using the browser API</span><br><span class="line">        document.title = `You clicked $&#123;count&#125; times`; //更改title</span><br><span class="line">        //这里有个问题，本来我想在didMount里写的逻辑现在在didUpdate里也会有，怎么破，条件限制？</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<p>这段代码的官方解释如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">We declare the count state variable, and then we tell React we need to use an effect. </span><br><span class="line">We pass a function to the useEffect Hook. This function we pass is our effect. </span><br><span class="line">Inside our effect, we set the document title using the document.title browser API. </span><br><span class="line">We can read the latest count inside the effect because it’s in the scope of our function. </span><br><span class="line">When React renders our component, it will remember the effect we used, and then run our effect after updating the DOM. </span><br><span class="line">This happens for every render, including the first one.</span><br></pre></td></tr></table></figure></p>
+<p>下面是详细对比：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">//这段代码表示的是获取一个朋友登录状态，是否在线</span><br><span class="line">class FriendStatusWithCounter extends React.Component &#123;</span><br><span class="line">  constructor(props) &#123;</span><br><span class="line">    super(props);</span><br><span class="line">    this.state = &#123; count: 0, isOnline: null &#125;;</span><br><span class="line">    this.handleStatusChange = this.handleStatusChange.bind(this);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  componentDidMount() &#123;</span><br><span class="line">    document.title = `You clicked $&#123;this.state.count&#125; times`;</span><br><span class="line"></span><br><span class="line">    //这个ChatAPI是一个外界的Api，不要在意这个，从方法名来看就是用了订阅和取消订阅来个方法来改变friend.id的值</span><br><span class="line"></span><br><span class="line">    ChatAPI.subscribeToFriendStatus(</span><br><span class="line">      this.props.friend.id,</span><br><span class="line">      this.handleStatusChange</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  componentDidUpdate() &#123;</span><br><span class="line">    document.title = `You clicked $&#123;this.state.count&#125; times`;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  componentWillUnmount() &#123;</span><br><span class="line">    ChatAPI.unsubscribeFromFriendStatus(</span><br><span class="line">      this.props.friend.id,</span><br><span class="line">      this.handleStatusChange</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleStatusChange(status) &#123;</span><br><span class="line">    this.setState(&#123;</span><br><span class="line">      isOnline: status.isOnline</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">function FriendStatusWithCounter(props) &#123;</span><br><span class="line">  const [count, setCount] = useState(0);</span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    document.title = `You clicked $&#123;count&#125; times`;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  const [isOnline, setIsOnline] = useState(null);</span><br><span class="line">  //问题是这样写不会订阅取消太频繁吗？</span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);</span><br><span class="line">    return () =&gt; &#123;</span><br><span class="line">      ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  function handleStatusChange(status) &#123;</span><br><span class="line">    setIsOnline(status.isOnline);</span><br><span class="line">  &#125;</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>官方的思想是利用钩子函数应该是让我们把代码分割成一个个的doing块，而不是按照生命周期来分割代码，组件的effects应该按照代码顺序来执行（可能表达的不是很对）。</p>
+<p>原文如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Hooks lets us split the code based on what it is doing rather than a lifecycle method name. </span><br><span class="line">React will apply every effect used by the component, in the order they were specified.</span><br></pre></td></tr></table></figure></p>
+<p>再来看componentDidUpdate方法，它其实有两个默认参数prevProps和prevState，用来表示前一个props和state。所以useEffect也同样有这么个东西，即第二个参数（array类型）。</p>
+<p>官方代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//原来的写法</span><br><span class="line">componentDidUpdate(prevProps, prevState) &#123;</span><br><span class="line">  if (prevState.count !== this.state.count) &#123;</span><br><span class="line">    document.title = `You clicked $&#123;this.state.count&#125; times`;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//useEffect的写法</span><br><span class="line">useEffect(() =&gt; &#123;</span><br><span class="line">  document.title = `You clicked $&#123;count&#125; times`;</span><br><span class="line">&#125;, [count]);</span><br></pre></td></tr></table></figure></p>
+<p>解释一下这个<code>[count]</code>,当渲染组件的时候第一次进入useEffect的时候会将你传入的第二个参数进行保存，当下次进来的时候useEffect会去判断这次的count和上次的count时候不同，从而起到原本componentDidUpdate的效果。</p>
+<p>官方解释如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">In the example above, we pass [count] as the second argument. </span><br><span class="line">What does this mean? If the count is 5, and then our component re-renders with count still equal to 5,</span><br><span class="line">React will compare [5] from the previous render and [5] from the next render. </span><br><span class="line">Because all items in the array are the same (5 === 5), React would skip the effect. </span><br><span class="line">That’s our optimization.</span><br><span class="line"></span><br><span class="line">When we render with count updated to 6, React will compare the items in the [5] array from the previous </span><br><span class="line">render to items in the [6] array from the next render. This time, React will re-apply the effect because 5 !== 6. </span><br><span class="line">If there are multiple items in the array, React will re-run the effect even if just one of them is different.</span><br></pre></td></tr></table></figure></p>
+<h4 id="useContext"><a href="#useContext" class="headerlink" title="useContext"></a>useContext</h4><p>官方文档对这个钩子函数的描述比较少，可以看下官方的解释。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const context = useContext(Context);</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">    Accepts a context object (the value returned from React.createContext) and returns the current context value, </span><br><span class="line">    as given by the nearest context provider for the given context.</span><br><span class="line"></span><br><span class="line">    When the provider updates, this Hook will trigger a rerender with the latest context value.</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<p>这个钩子函数会接收一个React.createContext返回的Context对象，并且将当前最近的provider的context的值返回，当provider更新时，这个钩子函数将会触发最新的context进行重绘</p>
+<p>这里补充下React.createContext这个16版本的新特性。</p>
+<p>因为React是单向数据流，所以数据的传递都是从上之下传递的，当我父节点的值想要传递个孙节点的时候一般来讲要通过子节点，<br>如下图</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1457831-b19e007758f57df7?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt=""><br>图是老图，图中方法名不是新特性的方法名，这里只是讲个概念</p>
+<p>所以有了context（上下文）这个东西，<br>如下图<br><img src="http://upload-images.jianshu.io/upload_images/1457831-1b8e3c5ce88f7758?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt=""><br>图是老图，图中方法名不是新特性的方法名，这里只是讲个概念</p>
+<p>React.createContext会返回一个包含Provider和Consumer这两个组件的对象，在Provider组件中设置的value将能够在Consumer组件中使用，也就是说你在父组件外包一层Provider组件，将父组件的值传给Provider的value，将孙组件外层包Consumer组件，孙组件就可以拿到父组件的值。这里要注意的是Consumer接收的是一个函数对象。</p>
+<p>代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">let &#123;Provider,Consumer&#125; = React.createContext();</span><br><span class="line">&lt;Provider value=&#123;&#123;a:1,b:2&#125;&#125;&gt;</span><br><span class="line">    &lt;Father&gt;</span><br><span class="line">        &lt;Son&gt;</span><br><span class="line">            &lt;GrandChild/&gt;</span><br><span class="line">        &lt;/Son&gt;</span><br><span class="line">    &lt;/Father&gt;</span><br><span class="line">&lt;Provider&gt;</span><br><span class="line">function GrandChild()&#123;</span><br><span class="line">    return(</span><br><span class="line">        &lt;Consumer&gt;</span><br><span class="line">            &#123;(context) =&gt; (</span><br><span class="line">                &lt;span&gt;&#123;context.a&#125;&#123;context.b&#125;&lt;/span&gt;</span><br><span class="line">            )&#125;</span><br><span class="line">        &lt;/Consumer&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在回到useContext，很明确了useContext可以让你直接拿到最近的Provider的value值，作为context用在你当前的组件里，不需要再去写Consumer这个组件。</p>
+<h3 id="Additional-Hooks"><a href="#Additional-Hooks" class="headerlink" title="Additional Hooks"></a>Additional Hooks</h3><p>有以下几种:</p>
+<ul>
+<li>useReducer</li>
+<li>useCallback</li>
+<li>useMemo</li>
+<li>useRef</li>
+<li>useImperativeMethods</li>
+<li>useMutationEffect</li>
+<li>useLayoutEffect</li>
+</ul>
+<p>这里就不全都介绍了，介绍几个我认为比较重要的钩子函数。</p>
+<h4 id="useReducer"><a href="#useReducer" class="headerlink" title="useReducer"></a>useReducer</h4><p>这个比较重要，是数据传递方面的钩子函数，将在后面的<code>与redux的运用</code>写一起。</p>
+<h4 id="useMemo"><a href="#useMemo" class="headerlink" title="useMemo"></a>useMemo</h4><p>官方解释如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const memoizedValue = useMemo(() =&gt; computeExpensiveValue(a, b), [a, b]);</span><br></pre></td></tr></table></figure></p>
+<p>这个钩子函数官方讲的也很简单，并没有具体的例子，这个函数会返回一个memoized的value，它有两个入参，分别是”create” function和一个array类型的参数，array将作为输入传给useMemo，useMemo将会保存这个值，当array中的值发生变化时才会去走”create” function这个函数方法从而更新memoizedValue，这样就避免了rerender过程中昂贵的计算。<br>个人demo如下，因为没有官方例子，所以自己写了一个：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; useState, useEffect, useMemo &#125; from &apos;react&apos;</span><br><span class="line">function Toggle () &#123;</span><br><span class="line">    const step = 2;</span><br><span class="line">  const [count, setCount] = useState(0)</span><br><span class="line">  const changeCount = (count,step)=&gt;&#123;</span><br><span class="line">    console.log(&quot;ccccccccccc\n&quot;,count)</span><br><span class="line">    return function()&#123;</span><br><span class="line">        return count+step</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  let memoizedValue = useMemo(()=&gt;&#123;</span><br><span class="line">    changeCount(count,step)</span><br><span class="line">  &#125;,[count,step])</span><br><span class="line"></span><br><span class="line">  //很遗憾这个memoizedValue没有打印出值，所以上述内容中的create打了引号，事实上官方也是打引号的，但官方没有解释这个create是什么函数方法</span><br><span class="line">  console.log(memoizedValue)    </span><br><span class="line">  return (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;br/&gt;</span><br><span class="line">        &lt;p&gt;Memo&lt;/p&gt;</span><br><span class="line">        &lt;span&gt;&#123;memoizedValue&#125;&lt;/span&gt;</span><br><span class="line">        &lt;button onClick=&#123;() =&gt; setCount(count===3?count:count+1)&#125;&gt;//每次点击改变count的值，count改变后会去触发useMemo</span><br><span class="line">            click</span><br><span class="line">        &lt;/button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">export default Toggle</span><br></pre></td></tr></table></figure></p>
+<p>上述例子很简单就是点击改变count的值从而去触发useMemo，当count为3的时候count的值就不变了，useMemo就不会去执行changeCount这个方法，这个方法就是上述的create function</p>
+<h4 id="useCallback"><a href="#useCallback" class="headerlink" title="useCallback"></a>useCallback</h4><p>这个钩子函数和useMemo一样，有两个入参，一个是callBack方法，一个是array类型的inputs，也是只有当inputs中的值改变时才回去执行callBack方法，官方例子如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const memoizedCallback = useCallback(</span><br><span class="line">  () =&gt; &#123;</span><br><span class="line">    doSomething(a, b);</span><br><span class="line">  &#125;,</span><br><span class="line">  [a, b],</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>同样它返回一个memoized类型的Callback（日了，这个memoized到底是什么），同样目的也是为了防止rerender的时候走这些方法函数，这个useCallback有个好处就是你可以将对于子组件的操作放callBack里，起到一个类似生命周期函数shouldComponentUpdate的功能。</p>
+<p>这个demo没写，因为与useMemo功能类似就不搞了（不想写，好烦，要写子组件和孙组件）。</p>
+<h4 id="useRef"><a href="#useRef" class="headerlink" title="useRef"></a>useRef</h4><p>作用和之前this.refs是一样的，官方demo如下，就不赘述了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function TextInputWithFocusButton() &#123;</span><br><span class="line">  const inputEl = useRef();</span><br><span class="line">  const onButtonClick = () =&gt; &#123;</span><br><span class="line">    // `current` points to the mounted text input element</span><br><span class="line">    inputEl.current.focus();</span><br><span class="line">  &#125;;</span><br><span class="line">  return (</span><br><span class="line">    &lt;&gt;</span><br><span class="line">      &lt;input ref=&#123;inputEl&#125; type=&quot;text&quot; /&gt;</span><br><span class="line">      &lt;button onClick=&#123;onButtonClick&#125;&gt;Focus the input&lt;/button&gt;</span><br><span class="line">    &lt;/&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>关于新特性的hooks就这么多了，没讲到的是我觉得写代码的时候不经常用的，其实我ref都不想写，因为本来就不推荐用这个东西。</p>
+<h2 id="与redux的运用-useReducer"><a href="#与redux的运用-useReducer" class="headerlink" title="与redux的运用(useReducer)"></a><div id="redux">与redux的运用(useReducer)</div></h2><p>我觉得新特性的hooks与redux的运用才是重点，然而当前官方文档的重心是在useState和useEffect上，因为官方花了大篇幅来讲解useEffect和useState。<br>现阶段我也只是摸索阶段，可能有讲的不对的地方。</p>
+<h3 id="useReducer-1"><a href="#useReducer-1" class="headerlink" title="useReducer"></a>useReducer</h3><p>新特性中有个useReducer，这个让熟悉redux的人眼前一亮，难道不需要第三方库就能解决react难受的数据的传递问题了么。<br>先来看下官方的useReducer的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">const initialState = &#123;count: 0&#125;;</span><br><span class="line"></span><br><span class="line">function reducer(state, action) &#123;</span><br><span class="line">  switch (action.type) &#123;</span><br><span class="line">    case &apos;reset&apos;:</span><br><span class="line">      return initialState;</span><br><span class="line">    case &apos;increment&apos;:</span><br><span class="line">      return &#123;count: state.count + 1&#125;;</span><br><span class="line">    case &apos;decrement&apos;:</span><br><span class="line">      return &#123;count: state.count - 1&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function Counter(&#123;initialCount&#125;) &#123;</span><br><span class="line">  const [state, dispatch] = useReducer(reducer, initialState);</span><br><span class="line">  return (</span><br><span class="line">    &lt;&gt;</span><br><span class="line">      Count: &#123;state.count&#125;</span><br><span class="line">      &lt;button onClick=&#123;() =&gt; dispatch(&#123;type: &apos;reset&apos;&#125;)&#125;&gt;</span><br><span class="line">        Reset</span><br><span class="line">      &lt;/button&gt;</span><br><span class="line">      &lt;button onClick=&#123;() =&gt; dispatch(&#123;type: &apos;increment&apos;&#125;)&#125;&gt;+&lt;/button&gt;</span><br><span class="line">      &lt;button onClick=&#123;() =&gt; dispatch(&#123;type: &apos;decrement&apos;&#125;)&#125;&gt;-&lt;/button&gt;</span><br><span class="line">    &lt;/&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出这个demo和我们写redux的时候十分相似，不，应该说简直一毛一样。<br>这里我就不赘述redux了，直接讲useReducer。<br>从上面的例子可以看出，useReducer接收了两个参数，reducer和initialSate,并且返回了对应的一个数组将值解构给了state和dispatch,下面通过按钮操作了state的值进行对应的变化。<br>这里可以看下useReducer的源码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var ReactCurrentOwner = &#123;</span><br><span class="line">    curren:null,</span><br><span class="line">    currentDispatch:null</span><br><span class="line">&#125;</span><br><span class="line">function resolveDispatcher() &#123;</span><br><span class="line">    var dispatcher = ReactCurrentOwner.currentDispatcher;</span><br><span class="line">    !(dispatcher !== null) ? invariant(false, &apos;Hooks can only be called inside the body of a function component.&apos;) : void 0;</span><br><span class="line">    return dispatcher;</span><br><span class="line">&#125;</span><br><span class="line">function useReducer(reducer, initialState, initialAction) &#123;</span><br><span class="line">    var dispatcher = resolveDispatcher();</span><br><span class="line">    return dispatcher.useReducer(reducer, initialState, initialAction);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>惊呆了，userReducer只有四行代码,但是追溯下去发现有问题啊，dispacher哪来的useReducer,其实官方文档里说了，上面的userReducer的代码只是一个简版（react.development.js中），真正的useReducer代码如下（react-dom.development.js中），很复杂的一段代码，这里就不讲了，太复杂（毕竟我是菜鸡，Dan的那种层次还达不到）。通过打印useReducer的返回值，可以看到，返回数组的第一个元素是state,第二个是一个function dispatchAction，这和redux十分相似。</p>
+<p>再来看下上面的demo的代码结构，结合redux的写法，可以发现demo中其实是把reducer和action写在一起了，这其实是和redux的理念冲突的，因为redux提倡在reducer中不做不纯净的操作，希望将赋值和对数据的操作分开，因此，一般对于数据的操作都写在action中，reducer中只是取值赋值操作。</p>
+<p>另外一个严厉的问题就是异步怎么写？</p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>新特性也是刚出来，还不是正式版，所以我也只是对于当前beta版本做一些解读，如有不对欢迎指正。</p>
+<p>editBy AmamiRyoin</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>觉得不错的话可以打赏哦</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="AmamiRyoin 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+            <a href="/tags/Javascript/" rel="tag"># Javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/27/js实现图片转成ASCII码/" rel="next" title="js实现图片转成ASCII码">
+                <i class="fa fa-chevron-left"></i> js实现图片转成ASCII码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/headImg/headImg.jpg"
+                alt="AmamiRyoin" />
+            
+              <p class="site-author-name" itemprop="name">AmamiRyoin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/AmamiRyoin" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/RyoinAmami" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#React16新特性解读"><span class="nav-number">1.</span> <span class="nav-text">React16新特性解读</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hooks"><span class="nav-number">1.1.</span> <span class="nav-text">Hooks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-Hooks"><span class="nav-number">1.1.1.</span> <span class="nav-text">Basic Hooks</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#useState"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">useState</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#useEffect"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">useEffect</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#useContext"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">useContext</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Additional-Hooks"><span class="nav-number">1.1.2.</span> <span class="nav-text">Additional Hooks</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#useReducer"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">useReducer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#useMemo"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">useMemo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#useCallback"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">useCallback</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#useRef"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">useRef</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与redux的运用-useReducer"><span class="nav-number">1.2.</span> <span class="nav-text">与redux的运用(useReducer)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#useReducer-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">useReducer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AmamiRyoin</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  <canvas></canvas>
+  <script type="text/javascript">
+    document.getElementsByTagName('canvas')[0].style="position:fixed;top:0;bottom:0;left:0;right:0;width: 100%;height: 100%;pointer-events: none;z-index: -1;";
+    document.addEventListener('touchmove', function (e) {
+                e.preventDefault()
+            })
+            var c = document.getElementsByTagName('canvas')[0],
+                x = c.getContext('2d'),
+                pr = window.devicePixelRatio || 1,
+                w = window.innerWidth,
+                h = window.innerHeight,
+                f = 90,
+                q,
+                m = Math,
+                r = 0,
+                u = m.PI*2,
+                v = m.cos,
+                z = m.random
+            c.width = w*pr
+            c.height = h*pr
+            x.scale(pr, pr)
+            x.globalAlpha = 0.6
+            function i(){
+                x.clearRect(0,0,w,h)
+                q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
+                while(q[1].x<w+f) d(q[0], q[1])
+            }
+            function d(i,j){
+                x.beginPath()
+                x.moveTo(i.x, i.y)
+                x.lineTo(j.x, j.y)
+                var k = j.x + (z()*2-0.25)*f,
+                    n = y(j.y)
+                x.lineTo(k, n)
+                x.closePath()
+                r-=u/-50
+                x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16)
+                x.fill()
+                q[0] = q[1]
+                q[1] = {x:k,y:n}
+            }
+            function y(p){
+                var t = p + (z()*2-1.1)*f
+                return (t>h||t<0) ? y(p) : t
+            }
+            document.onclick = i
+            document.ontouchstart = i
+            i()
+  </script>
+</body>
+</html>
