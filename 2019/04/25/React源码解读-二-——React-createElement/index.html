@@ -81,18 +81,20 @@
 
 
 
-<meta name="description" content="继上次分享了React新特性，当然参考了论坛中一些人的看法，在社区中，大部分布道者都提到了诸如“过于冗繁的组件嵌套”、“与内部原理的更亲密接触”、“比原先更细粒度的逻辑组织与复用”等优势，这次来谈下对于新特性中的hooks的看法。 React新特性中的hooks强调了用函数式组件的思想来代替类组件，然而这个也颠覆了react中原本函数式组件的写法。 123function TextComponen">
+<meta name="description" content="在说createElement之前，首先来比较下下面两种写法。 1234567891011//写法一let pDom=document.createElement(&amp;quot;p&amp;quot;);let textNode=document.createTextNode(&amp;quot;text&amp;quot;);pDom.appendChild(textNode);let rootElement=docum">
 <meta name="keywords" content="React">
 <meta property="og:type" content="article">
-<meta property="og:title" content="React Hooks看法">
-<meta property="og:url" content="http://yoursite.com/2019/02/28/React-Hooks理解/index.html">
+<meta property="og:title" content="React源码解读(二) —— React.createElement">
+<meta property="og:url" content="http://yoursite.com/2019/04/25/React源码解读-二-——React-createElement/index.html">
 <meta property="og:site_name" content="AmamiRyoin&#39;s Blog">
-<meta property="og:description" content="继上次分享了React新特性，当然参考了论坛中一些人的看法，在社区中，大部分布道者都提到了诸如“过于冗繁的组件嵌套”、“与内部原理的更亲密接触”、“比原先更细粒度的逻辑组织与复用”等优势，这次来谈下对于新特性中的hooks的看法。 React新特性中的hooks强调了用函数式组件的思想来代替类组件，然而这个也颠覆了react中原本函数式组件的写法。 123function TextComponen">
+<meta property="og:description" content="在说createElement之前，首先来比较下下面两种写法。 1234567891011//写法一let pDom=document.createElement(&amp;quot;p&amp;quot;);let textNode=document.createTextNode(&amp;quot;text&amp;quot;);pDom.appendChild(textNode);let rootElement=docum">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-28T07:44:39.517Z">
+<meta property="og:image" content="http://yoursite.com/images/createElement1.png">
+<meta property="og:updated_time" content="2019-04-25T03:48:16.827Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="React Hooks看法">
-<meta name="twitter:description" content="继上次分享了React新特性，当然参考了论坛中一些人的看法，在社区中，大部分布道者都提到了诸如“过于冗繁的组件嵌套”、“与内部原理的更亲密接触”、“比原先更细粒度的逻辑组织与复用”等优势，这次来谈下对于新特性中的hooks的看法。 React新特性中的hooks强调了用函数式组件的思想来代替类组件，然而这个也颠覆了react中原本函数式组件的写法。 123function TextComponen">
+<meta name="twitter:title" content="React源码解读(二) —— React.createElement">
+<meta name="twitter:description" content="在说createElement之前，首先来比较下下面两种写法。 1234567891011//写法一let pDom=document.createElement(&amp;quot;p&amp;quot;);let textNode=document.createTextNode(&amp;quot;text&amp;quot;);pDom.appendChild(textNode);let rootElement=docum">
+<meta name="twitter:image" content="http://yoursite.com/images/createElement1.png">
 
 
 
@@ -122,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/02/28/React-Hooks理解/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/04/25/React源码解读-二-——React-createElement/"/>
 
 
 
 
 
-  <title>React Hooks看法 | AmamiRyoin's Blog</title>
+  <title>React源码解读(二) —— React.createElement | AmamiRyoin's Blog</title>
   
 
 
@@ -444,7 +446,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/28/React-Hooks理解/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/25/React源码解读-二-——React-createElement/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AmamiRyoin">
@@ -461,7 +463,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">React Hooks看法</h1>
+          <h1 class="post-title" itemprop="name headline">React源码解读(二) —— React.createElement</h1>
         
 
         <div class="post-meta">
@@ -473,8 +475,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-28T10:42:38+08:00">
-                2019-02-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-25T10:09:46+08:00">
+                2019-04-25
               </time>
             
 
@@ -511,37 +513,35 @@
       
 
       
-        <p>继上次分享了React新特性，当然参考了论坛中一些人的看法，在社区中，大部分布道者都提到了诸如“过于冗繁的组件嵌套”、“与内部原理的更亲密接触”、“比原先更细粒度的逻辑组织与复用”等优势，这次来谈下对于新特性中的hooks的看法。</p>
-<p>React新特性中的hooks强调了用函数式组件的思想来代替类组件，然而这个也颠覆了react中原本函数式组件的写法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function TextComponent(text)&#123;</span><br><span class="line">    return &lt;p&gt;&#123;text&#125;&lt;/p&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上例代码是一个非常简单的函数组件，只依赖入参。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function TextComponent()&#123;</span><br><span class="line">    let [text,changeText] = useState(&apos;hello&apos;);</span><br><span class="line">    return &lt;p&gt;&#123;text&#125;&lt;/p&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上例代码是用了hooks的一个函数组件。<br>虽然在功能上两种写法是一致，但是可以看出hooks的组件并不是纯粹的<code>输入到输出</code>，而是变成了<code>changeText</code>方法控制的输出，text是依赖changeText方法的。也就是说对于函数组件来说更多地去依赖了changeText方法这一逻辑控制。</p>
-<p>在这里我们可以先讨论下关于类组件和函数组件。</p>
-<p>某些情况下函数组件可以直接代替类组件，但函数组件和类组件之间最大的区别就是一个有状态机制，一个没有状态机制。函数组价没有内部状态变化机制，只能从外部进行状态的驱动。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function Hello(props, context) &#123;</span><br><span class="line">  return &lt;span&gt;Hello &#123;props.name&#125;&lt;/span&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class Hello extends Component &#123;</span><br><span class="line">  state = &#123;</span><br><span class="line">    name: &apos;haha&apos;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  handleClick=()=&gt;&#123;</span><br><span class="line">    this.setState(&#123;</span><br><span class="line">      name: &apos;hehe&apos;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  render() &#123;</span><br><span class="line">    return &lt;span onClick=&#123;this.handleClick&#125;&gt;Hello &#123;this.state.name&#125;&lt;/span&gt;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>状态机制的存在使得函数组件无法取代类组件，因此我们写代码的时候更多的都是去写类组件。<br>但类组件也有很多不足之处。</p>
+        <p>在说createElement之前，首先来比较下下面两种写法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//写法一</span><br><span class="line">let pDom=document.createElement(&quot;p&quot;);</span><br><span class="line">let textNode=document.createTextNode(&quot;text&quot;);</span><br><span class="line">pDom.appendChild(textNode);</span><br><span class="line">let rootElement=document.getElementById(&quot;root&quot;);</span><br><span class="line">rootElement.appendChild(pDom);</span><br><span class="line"></span><br><span class="line">//写法二</span><br><span class="line">let pDom = &lt;p&gt;text&lt;/p&gt;</span><br><span class="line">return &lt;div id=&apos;root&apos;&gt;&#123;pDom&#125;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>以上两种写法分别是js写法和react写法,很显然,相较于写法一,写法二更符合我们书写html的习惯而且代码也更容易阅读。<br>那么为什么能用写法二来写呢，我们把代码放进babel里面看一下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">var pDom = React.createElement(&quot;p&quot;, null, &quot;text&quot;);</span><br><span class="line">return React.createElement(&quot;div&quot;, &#123;</span><br><span class="line">    id: &quot;root&quot;</span><br><span class="line">&#125;, pDom);</span><br></pre></td></tr></table></figure>
+<p>可以看到写法二的代码被转成了上述的样子，即,用React.createElement创建了dom节点（虚拟）。我们可以打印看下这个pDom是个什么东西。</p>
+<p><img src="/images/createElement1.png" alt="pDom"></p>
+<p>从中可以看出pDom实际上就是一个js对象，有如下属性。</p>
 <ul>
-<li><p>标签嵌套地狱</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">render() &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;FooContext.Provider value=&#123;this.state.foo&#125;&gt;</span><br><span class="line">      &lt;BarContext.Provider value=&#123;this.state.bar&#125;&gt;</span><br><span class="line">        &lt;BarContext.Consumer&gt;</span><br><span class="line">          &#123;bar =&gt; (</span><br><span class="line">            &lt;FooContext.Consumer&gt;</span><br><span class="line">              &#123;foo =&gt; (</span><br><span class="line">                console.log(bar, foo)</span><br><span class="line">              )&#125;</span><br><span class="line">            &lt;/FooContext.Consumer&gt;</span><br><span class="line">          )&#125;</span><br><span class="line">        &lt;/BarContext.Consumer&gt;</span><br><span class="line">      &lt;/BarContext.Provider&gt;</span><br><span class="line">    &lt;/FooContext.Provider&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>一些有状态的逻辑比较难重用,需要大量借助Context</p>
-</li>
+<li><code>$$typeof</code> 唯一标志，它是一个Symbol对象，具有唯一性，在redux中给actions命名的时候用起来很爽。</li>
+<li><code>key</code> DOM结构标识，提升diff算法性能。</li>
+<li><code>props</code> 标签属性。</li>
+<li><code>ref</code> 标志真实Dom引用。</li>
+<li><code>type</code> 该虚拟dom的标签类型。</li>
+<li><code>_owner</code> 16版本新加的东西，是个FiberNode对象，直译就是纤维节点，可以理解成片段节点。</li>
+<li><code>_store</code> 暂时不清楚（源码里也没看懂用来干嘛的）<br>所以可以这样理解，虚拟节点就是react对dom的一个解析并将其用js对象表示出来。</li>
 </ul>
-<p>其实这个也是react的不足之处，因此React团队基于函数组件提出hooks的概念。</p>
-<p>以上的例子可以综合成下面这个hook例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import &#123; useState, useContext, useEffect, createContext &#125; from &apos;react&apos;;</span><br><span class="line">const FooContext = createContext(&apos;foo&apos;);</span><br><span class="line">const BarContext = createContext(&apos;bar&apos;);</span><br><span class="line"></span><br><span class="line">function Hello(props, context) &#123;</span><br><span class="line">  const [name, setName] = useState(&apos;haha&apos;);</span><br><span class="line"></span><br><span class="line">  const foo = useContext(FooContext);</span><br><span class="line">  const bar = useContext(BarContext);</span><br><span class="line"></span><br><span class="line">  const handleClick = () =&gt; setName(&apos;hehe&apos;);</span><br><span class="line"></span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    return () =&gt; &#123;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, [name]);</span><br><span class="line"></span><br><span class="line">  return (</span><br><span class="line">    &lt;&gt;</span><br><span class="line">      &lt;span onClick=&#123;handleClick&#125;&gt;Hello &#123;name&#125;&lt;/span&gt;</span><br><span class="line"></span><br><span class="line">      &lt;FooContext.Provider&gt;</span><br><span class="line">        &lt;BarContext.Provider&gt;</span><br><span class="line">          &#123;foo&#125;, &#123;bar&#125;</span><br><span class="line">        &lt;/BarContext.Provider&gt;</span><br><span class="line">      &lt;/FooContext.Provider&gt;</span><br><span class="line">    &lt;/&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>从上面其实可以看出一些react团队的编码思想。</p>
-<ul>
-<li><code>let [text,changeText] = useState(&#39;hello&#39;)</code>这种写法可以让<code>状态和逻辑</code>两两配对，并且因为使用者可以用useState自定义各种hooks，所以可以让开发者更好地处理代码结构；</li>
-<li>状态的颗粒度可以很小，由于配对的原因可控范围也很小，对于整体的影响范围不大，单个组件中能用多个hook来进行状态修改，甚至可以拆分成多个组件或状态；<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">let &#123; useState, useEffect &#125; = require(&apos;react&apos;);</span><br><span class="line"></span><br><span class="line">function useIsHear() &#123;</span><br><span class="line">  let [isHear, setIsHear] = useState(false);</span><br><span class="line"></span><br><span class="line">  function isHearChange() &#123;</span><br><span class="line">    setIsHear(true);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    isHearChange()</span><br><span class="line">    return () =&gt; &#123;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;, [isHear]);</span><br><span class="line"></span><br><span class="line">  return isHear;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function Answer() &#123;</span><br><span class="line">  let isHear = useIsHear();</span><br><span class="line">  return &#123;isHear ? &lt;span&gt;answer&lt;/span&gt;:&lt;span&gt;leave&lt;/span&gt;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>通过hooks可以方便的把状态进行分离，每一个状态分离后可复用，通过组合的方式提供一种有状态逻辑的复用。</p>
-<ul>
-<li>通过hooks更容易实现逻辑与展示的分离，函数组件依然会是一个实现渲染逻辑的纯组件，对状态的管理已经被hooks内部所实现，即有状态无渲染和有渲染无状态；<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function Hello(props)&#123;</span><br><span class="line">    return &lt;p&gt;Hello &#123;props.name&#125;&lt;/p&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function useHello()&#123;</span><br><span class="line">    let [hello,setHello] = useState(&apos;hello&apos;);</span><br><span class="line">    return [hello,setHello];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
+<p>现在来看下createElement的源码。</p>
+<p>首先来看下入参。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const RESERVED_PROPS = &#123;    //需要过滤的propNames</span><br><span class="line">  key: true,</span><br><span class="line">  ref: true,</span><br><span class="line">  __self: true,</span><br><span class="line">  __source: true,</span><br><span class="line">&#125;;</span><br><span class="line">export function createElement(type, config, children) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结合之前看的babel编译后的代码我们可以看出来type,config,children代表什么，type是指节点，config是指传给该标签的属性，children是子节点。<br>接下来看内部代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">let propName;</span><br><span class="line"></span><br><span class="line">  // Reserved names are extracted</span><br><span class="line">  const props = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  let key = null;</span><br><span class="line">  let ref = null;</span><br><span class="line">  let self = null;</span><br><span class="line">  let source = null;</span><br><span class="line"></span><br><span class="line">  if (config != null) &#123;</span><br><span class="line">    if (hasValidRef(config)) &#123;  //判断config中是否存在ref</span><br><span class="line">      ref = config.ref;</span><br><span class="line">    &#125;</span><br><span class="line">    if (hasValidKey(config)) &#123;  //判断config中是否存在key</span><br><span class="line">      key = &apos;&apos; + config.key;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    self = config.__self === undefined ? null : config.__self;</span><br><span class="line">    source = config.__source === undefined ? null : config.__source;</span><br><span class="line"></span><br><span class="line">    // Remaining properties are added to a new props object</span><br><span class="line">    for (propName in config) &#123;      //遍历属性并将其添加到props里面</span><br><span class="line">      if (</span><br><span class="line">        hasOwnProperty.call(config, propName) &amp;&amp;</span><br><span class="line">        !RESERVED_PROPS.hasOwnProperty(propName)    //这里是过滤不需要绑定的propNames</span><br><span class="line">      ) &#123;</span><br><span class="line">        props[propName] = config[propName];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>再接下来就是children的处理。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// Children can be more than one argument, and those are transferred onto</span><br><span class="line">// the newly allocated props object.</span><br><span class="line">  const childrenLength = arguments.length - 2;</span><br><span class="line">  if (childrenLength === 1) &#123;   //这里就解释了为什么当你标签下只有一个子标签的时候你用数组方式无法取到</span><br><span class="line">    props.children = children;</span><br><span class="line">  &#125; else if (childrenLength &gt; 1) &#123;</span><br><span class="line">    const childArray = Array(childrenLength);</span><br><span class="line">    for (let i = 0; i &lt; childrenLength; i++) &#123;</span><br><span class="line">      childArray[i] = arguments[i + 2];</span><br><span class="line">    &#125;</span><br><span class="line">    if (__DEV__) &#123;          //开发环境下的特殊操作</span><br><span class="line">      if (Object.freeze) &#123;</span><br><span class="line">        Object.freeze(childArray);  //es6语法，freeze方法可以冻结一个对象使其无法被操作</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    props.children = childArray;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>在接下来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// Resolve default props</span><br><span class="line">  if (type &amp;&amp; type.defaultProps) &#123;</span><br><span class="line">    const defaultProps = type.defaultProps;</span><br><span class="line">    for (propName in defaultProps) &#123;    //将defaultProps添加到props里面</span><br><span class="line">      if (props[propName] === undefined) &#123;</span><br><span class="line">        props[propName] = defaultProps[propName];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  if (__DEV__) &#123;</span><br><span class="line">    if (key || ref) &#123;</span><br><span class="line">      const displayName =</span><br><span class="line">        typeof type === &apos;function&apos;</span><br><span class="line">          ? type.displayName || type.name || &apos;Unknown&apos;  //标签名的获取</span><br><span class="line">          : type;</span><br><span class="line">      if (key) &#123;</span><br><span class="line">        defineKeyPropWarningGetter(props, displayName); //用来把key添加中props中。</span><br><span class="line">      &#125;</span><br><span class="line">      if (ref) &#123;</span><br><span class="line">        defineRefPropWarningGetter(props, displayName); //用来把ref添加中props中。</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">function defineKeyPropWarningGetter(props, displayName) &#123;</span><br><span class="line">  const warnAboutAccessingKey = function() &#123;</span><br><span class="line">    if (!specialPropKeyWarningShown) &#123;</span><br><span class="line">      specialPropKeyWarningShown = true;</span><br><span class="line">      warningWithoutStack(</span><br><span class="line">        false,</span><br><span class="line">        &apos;%s: `key` is not a prop. Trying to access it will result &apos; +</span><br><span class="line">          &apos;in `undefined` being returned. If you need to access the same &apos; +</span><br><span class="line">          &apos;value within the child component, you should pass it as a different &apos; +</span><br><span class="line">          &apos;prop. (https://fb.me/react-special-props)&apos;,</span><br><span class="line">        displayName,</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  warnAboutAccessingKey.isReactWarning = true;</span><br><span class="line">  Object.defineProperty(props, &apos;key&apos;, &#123;         //在props中添加一个key属性，并将get和configurable赋给key</span><br><span class="line">    get: warnAboutAccessingKey,</span><br><span class="line">    configurable: true,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function defineRefPropWarningGetter(props, displayName) &#123;</span><br><span class="line">  const warnAboutAccessingRef = function() &#123;</span><br><span class="line">    if (!specialPropRefWarningShown) &#123;</span><br><span class="line">      specialPropRefWarningShown = true;</span><br><span class="line">      warningWithoutStack(</span><br><span class="line">        false,</span><br><span class="line">        &apos;%s: `ref` is not a prop. Trying to access it will result &apos; +</span><br><span class="line">          &apos;in `undefined` being returned. If you need to access the same &apos; +</span><br><span class="line">          &apos;value within the child component, you should pass it as a different &apos; +</span><br><span class="line">          &apos;prop. (https://fb.me/react-special-props)&apos;,</span><br><span class="line">        displayName,</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  warnAboutAccessingRef.isReactWarning = true;</span><br><span class="line">  Object.defineProperty(props, &apos;ref&apos;, &#123;             //在props中添加一个ref属性，并将get和configurable赋给ref</span><br><span class="line">    get: warnAboutAccessingRef,</span><br><span class="line">    configurable: true,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后就是返回一个ReactElement对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">return ReactElement(</span><br><span class="line">    type,</span><br><span class="line">    key,</span><br><span class="line">    ref,</span><br><span class="line">    self,</span><br><span class="line">    source,</span><br><span class="line">    ReactCurrentOwner.current,</span><br><span class="line">    props,</span><br><span class="line">  );</span><br></pre></td></tr></table></figure>
+<p>以上</p>
 
       
     </div>
@@ -596,8 +596,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/01/React16新特性解读/" rel="next" title="React16新特性解读">
-                <i class="fa fa-chevron-left"></i> React16新特性解读
+              <a href="/2019/04/24/React源码解读-一/" rel="next" title="React源码解读(一) ——— ReactDom.render()">
+                <i class="fa fa-chevron-left"></i> React源码解读(一) ——— ReactDom.render()
               </a>
             
           </div>
@@ -605,10 +605,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/24/React源码解读-一/" rel="prev" title="React源码解读(一) ——— ReactDom.render()">
-                React源码解读(一) ——— ReactDom.render() <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
