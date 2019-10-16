@@ -440,6 +440,188 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/16/也许能用到的webApi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AmamiRyoin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/headImg/head_Img.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AmamiRyoin's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/16/也许能用到的webApi/" itemprop="url">也许能用到的webApi</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-16T19:18:00+08:00">
+                2019-10-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="一些也许能用到的webApi"><a href="#一些也许能用到的webApi" class="headerlink" title="一些也许能用到的webApi"></a>一些也许能用到的webApi</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>众所周知Web发展到2.0了，html也到5了，其中增加了很多webApi，今天就来挑几个webApi来讲讲。</p>
+<h3 id="page-lifecycle-网页生命周期"><a href="#page-lifecycle-网页生命周期" class="headerlink" title="page lifecycle(网页生命周期)"></a>page lifecycle(网页生命周期)</h3><p>这个生命周期可以让我们把控整个网页从诞生到卸载的全部情况，它主要分为以下几个生命周期：</p>
+<ul>
+<li><p>Active 阶段</p>
+<p>  在 Active 阶段，网页处于可见状态，且拥有输入焦点。</p>
+</li>
+<li><p>Passive 阶段</p>
+<p>  在 Passive 阶段，网页可见，但没有输入焦点，无法接受输入。UI 更新（比如动画）仍然在执行。该阶段只可能发生在桌面同时有多个窗口的情况。</p>
+</li>
+<li><p>Hidden 阶段</p>
+<p>  在 Hidden 阶段，用户的桌面被其他窗口占据，网页不可见，但尚未冻结。UI 更新不再执行。</p>
+</li>
+<li><p>Terminated 阶段</p>
+<p>  在 Terminated 阶段，由于用户主动关闭窗口，或者在同一个窗口前往其他页面，导致当前页面开始被浏览器卸载并从内存中清除。注意，这个阶段总是在 Hidden 阶段之后发生，也就是说，用户主动离开当前页面，总是先进入 Hidden 阶段，再进入 Terminated 阶段。</p>
+<p>  这个阶段会导致网页卸载，任何新任务都不会在这个阶段启动，并且如果运行时间太长，正在进行的任务可能会被终止。</p>
+</li>
+<li><p>Frozen 阶段</p>
+<p>  如果网页处于 Hidden 阶段的时间过久，用户又不关闭网页，浏览器就有可能冻结网页，使其进入 Frozen 阶段。不过，也有可能，处于可见状态的页面长时间没有操作，也会进入 Frozen 阶段。</p>
+<p>  这个阶段的特征是，网页不会再被分配 CPU 计算资源。定时器、回调函数、网络 请求、DOM 操作都不会执行，不过正在运行的任务会执行完。浏览器可能会允许 Frozen 阶段的页面，周期性复苏一小段时间，短暂变回 Hidden 状态，允许一小部分任务执行。</p>
+</li>
+<li><p>Discarded 阶段</p>
+<p>  如果网页长时间处于 Frozen 阶段，用户又不唤醒页面，那么就会进入 Discarded 阶段，即浏览器自动卸载网页，清除该网页的内存占用。不过，Passive 阶段的网页如果长时间没有互动，也可能直接进入 Discarded 阶段。</p>
+<p>  这一般是在用户没有介入的情况下，由系统强制执行。任何类型的新任务或 JavaScript 代码，都不能在此阶段执行，因为这时通常处在资源限制的状况下。</p>
+<p>  网页被浏览器自动 Discarded 以后，它的 Tab 窗口还是在的。如果用户重新访问这个 Tab 页，浏览器将会重新向服务器发出请求，再一次重新加载网页，回到 Active 阶段。</p>
+</li>
+</ul>
+<p>详细可以看这张流程图</p>
+<p><img src="/images/LifecycleCallbacks.png" alt="page lifecycle"></p>
+<p>介绍完了网页的各个阶段，现在来介绍一下对应的生命周期有哪些事件。</p>
+<ul>
+<li><p>focus和blur(聚焦和失焦)</p>
+<p>  这里指网页获取焦点和是去焦点，对应的网页周期则是<code>Passive</code>阶段变为<code>Active</code>阶段和<code>Active</code>阶段变为<code>Passive</code>阶段。</p>
+</li>
+<li><p>visibilitychange</p>
+<p>  <code>visibilitychange事件</code>在网页可见状态发生变化时触发，一般发生在以下几种场景。</p>
+<ul>
+<li>用户隐藏页面（切换 Tab、最小化浏览器），页面由 Active 阶段变成 Hidden 阶段。</li>
+<li>用户重新访问隐藏的页面，页面由 Hidden 阶段变成 Active 阶段。</li>
+<li>用户关闭页面，页面会先进入 Hidden 阶段，然后进入 Terminated 阶段。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.onvisibilitychange=fn</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>freeze</p>
+<p>  freeze事件在网页进入 Frozen 阶段时触发。有个注意点就是从Frozen阶段进入Discarded阶段，不会触发任何事件，无法指定回调函数，只能在进入 Frozen阶段时指定回调函数。关于是否进入Discarded阶段我们可以通过document.wasDiscarded方法来判断，同时，window对象上会新增window.clientId和window.discardedClientId两个属性，用来恢复丢弃前的状态。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.onfreeze = fn</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>resume</p>
+<p>  resume事件在网页离开 Frozen 阶段，变为 Active / Passive / Hidden 阶段时触发。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.resume = fn</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>pageshow和pagehide</p>
+<p>  pageshow事件在用户加载网页时触发，有可能是全新的页面加载，也可能是从缓存中获取的页面。如果是从缓存中获取，则该事件对象的event.persisted属性为true，否则为false。<br>  pagehide事件在用户离开当前网页、进入另一个网页时触发。它的前提是浏览器的 History 记录必须发生变化，跟网页是否可见无关。<br>  虽然这两个事件的目标是document，但必须将其事件处理程序添加到window。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var addHandler = function (element, type, handler) &#123;</span><br><span class="line">    if (element.addEventListener) &#123;</span><br><span class="line">        element.addEventListener(type, handler, false);</span><br><span class="line">    &#125; else if (element.attachEvent) &#123;</span><br><span class="line">        element.attachEvent(&quot;on&quot; + type, handler);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        element[&quot;on&quot; + type] = handler;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">addHandler(window, &quot;pageshow&quot;, function (event) &#123;</span><br><span class="line">    alert(&quot;pageshow&quot;);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">addHandler(window, &quot;pagehide&quot;, function () &#123;</span><br><span class="line">    alert(&quot;pagehide&quot;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>beforeunload和unload</p>
+<p>  beforeunload事件在窗口或文档即将卸载时触发。该事件发生时，文档仍然可见，此时卸载仍可取消。unload事件在页面正在卸载时触发，经过这个事件，网页进入 Terminated 状态。</p>
+</li>
+</ul>
+<h3 id="online-state（网络状态）"><a href="#online-state（网络状态）" class="headerlink" title="online state（网络状态）"></a>online state（网络状态）</h3><pre><code>获取当前的网络状态，同时也有对应的事件去响应网络状态的变化。
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">window.addEventListener(&apos;online&apos;,onlineHandler)</span><br><span class="line">window.addEventListener(&apos;offline&apos;,offlineHandler)</span><br></pre></td></tr></table></figure>
+</code></pre><h3 id="Vibration（震动）"><a href="#Vibration（震动）" class="headerlink" title="Vibration（震动）"></a>Vibration（震动）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 可以传入一个大于0的数字，表示让手机震动相应的时间长度，单位为ms</span><br><span class="line">navigator.vibrate(100)</span><br><span class="line">// 也可以传入一个包含数字的数组，比如下面这样就是代表震动300ms，暂停200ms，震动100ms，暂停400ms，震动100ms</span><br><span class="line">navigator.vibrate([300,200,100,400,100])</span><br><span class="line">// 也可以传入0或者一个全是0的数组，表示暂停震动</span><br><span class="line">navigator.vibrate(0)</span><br></pre></td></tr></table></figure>
+<h3 id="execCommand-执行命令"><a href="#execCommand-执行命令" class="headerlink" title="execCommand 执行命令"></a>execCommand 执行命令</h3><p>xeccommand 方法让我们可以通过使用它来执行一些命令，比如复制，剪切，打印，修改选中文字粗体、斜体、背景色、颜色，缩进，插入图片等等等等。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 执行打印命令</span><br><span class="line">doc.execCommand(&apos;print&apos;)</span><br><span class="line">// 执行复制命令，复制选中区域</span><br><span class="line">doc.execCommand(&apos;copy&apos;)</span><br><span class="line">// 剪切选中区域</span><br><span class="line">doc.execCommand(&apos;cut&apos;)</span><br><span class="line">// 全选</span><br><span class="line">doc.execCommand(&apos;selectAll&apos;)</span><br><span class="line">// 将选中文字变成粗体，同时接下来输入的文字也会成为粗体，</span><br><span class="line">doc.execCommand(&apos;bold&apos;)</span><br><span class="line">// 将选中文字变成斜体，同时接下来输入的文字也会成为斜体，</span><br><span class="line">doc.execCommand(&apos;italic&apos;)</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/10/React源码解读-三-——-React-render/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1775,193 +1957,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/23/Redux异步处理之Redux-thunk与Redux-saga/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="AmamiRyoin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/headImg/head_Img.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="AmamiRyoin's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/23/Redux异步处理之Redux-thunk与Redux-saga/" itemprop="url">Redux异步处理之Redux-thunk与Redux-saga</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-23T14:23:07+08:00">
-                2018-04-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Redux异步处理之-Redux-thunk与Redux-saga"><a href="#Redux异步处理之-Redux-thunk与Redux-saga" class="headerlink" title="Redux异步处理之 Redux-thunk与Redux-saga"></a>Redux异步处理之 Redux-thunk与Redux-saga</h1><h2 id="Redux异步"><a href="#Redux异步" class="headerlink" title="Redux异步"></a>Redux异步</h2><p>众所周知，redux中所有的dispatch都是同步的，而处理ajax或fetch之类的异步请求一般要分为三步。</p>
-<h3 id="Action"><a href="#Action" class="headerlink" title="Action:"></a>Action:</h3><p>需要写三个action来处理——fetching、fetched、error这三步，请看代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123; type:&apos;FETCH_POSTS_REQUEST&apos;&#125;//发起请求</span><br><span class="line">&#123; type:&apos;FETCH_POSTS_FAILURE&apos;, payload: &apos;errorInfo&apos; &#125;//请求失败</span><br><span class="line">&#123; type:&apos;FETCH_POSTS_SUCCESS&apos;, payload:&#123;data&#125;//请求成功并且获取到数据</span><br></pre></td></tr></table></figure></p>
-<h3 id="Reducer"><a href="#Reducer" class="headerlink" title="Reducer:"></a>Reducer:</h3><p>同样需要写三个对应的reduce来进行对state的处理以及合并，代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">let reducer = (state = initialState, action) =&gt; &#123;</span><br><span class="line">	switch(action.type) &#123;</span><br><span class="line">		//发起请求时reducer的处理</span><br><span class="line">		case &apos;FETCH_POSTS_REQUEST&apos;: &#123;</span><br><span class="line">			return &#123;...state, fetching: true&#125;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">		//请求失败时的处理</span><br><span class="line">		case &apos;FETCH_POSTS_FAILURE&apos;: &#123;</span><br><span class="line">			return &#123;...state, fetching: false, error: action.payload&#125;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">		//请求成功</span><br><span class="line">		case &apos;FETCH_POSTS_SUCCESS&apos;: &#123;</span><br><span class="line">			return &#123;...state, fetching: false, fetched: true, users: action.payload&#125;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return state;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="如何进行dispatch"><a href="#如何进行dispatch" class="headerlink" title="如何进行dispatch"></a>如何进行dispatch</h3><p>由于dispatch是同步操作，reducer中又是以纯函数的形式进行代码编写，不能往里面加入其它带有操作性质的代码，因此异步的操作我们需要借助中间件来完成。<br>redux中 <code>applyMiddleware</code> 用法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const store = createStore(</span><br><span class="line">	reducer,</span><br><span class="line">	applyMiddleware(...middlewares)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
-<p>为了了解中间件到底做了些什么，先来看下源码：</p>
-<h4 id="applyMiddleware："><a href="#applyMiddleware：" class="headerlink" title="applyMiddleware："></a>applyMiddleware：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">function applyMiddleware() &#123;</span><br><span class="line">	for (var _len = arguments.length, middlewares = Array(_len), _key = 0; _key &lt; _len; _key++) &#123;</span><br><span class="line">		middlewares[_key] = arguments[_key];</span><br><span class="line">	&#125;//定义一个middlewares数组，长度和入参相同，并且将入参传入该数组中</span><br><span class="line">	return function (createStore) &#123;//这里的creatStore即前面的creatStore方法</span><br><span class="line">		return function (reducer, preloadedState, enhancer) &#123;//这里的enhancer可以就当成是中间件</span><br><span class="line">			var store = createStore(reducer, preloadedState, enhancer);</span><br><span class="line">			var _dispatch = store.dispatch;</span><br><span class="line">			var chain = [];</span><br><span class="line">			var middlewareAPI = &#123;</span><br><span class="line">				getState: store.getState,</span><br><span class="line">				dispatch: function dispatch(action) &#123;</span><br><span class="line">					return _dispatch(action);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;;</span><br><span class="line">			chain = middlewares.map(function (middleware) &#123;</span><br><span class="line">				return middleware(middlewareAPI);</span><br><span class="line">			&#125;);//我们可以看下chain里面是个什么东西</span><br><span class="line">			_dispatch = compose.apply(undefined, chain)(store.dispatch);//嵌套执行中间件的组合逻辑（因此才有中间件执行顺序一说）</span><br><span class="line">			return _extends(&#123;&#125;, store, &#123;</span><br><span class="line">				dispatch: _dispatch //说白了中间件实际上就是改造了dispatch</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;;</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="compose："><a href="#compose：" class="headerlink" title="compose："></a>compose：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">* Composes single-argument functions from right to left. The rightmost</span><br><span class="line">* function can take multiple arguments as it provides the signature for</span><br><span class="line">* the resulting composite function.</span><br><span class="line">*</span><br><span class="line">* @param &#123;...Function&#125; funcs The functions to compose.</span><br><span class="line">* @returns &#123;Function&#125; A function obtained by composing the argument functions</span><br><span class="line">* from right to left. For example, compose(f, g, h) is identical to doing</span><br><span class="line">* (...args) =&gt; f(g(h(...args))).</span><br><span class="line">*/</span><br><span class="line">function compose() &#123;</span><br><span class="line">	for (var _len = arguments.length, funcs = Array(_len), _key = 0; _key &lt; _len; _key++) &#123;</span><br><span class="line">		funcs[_key] = arguments[_key];</span><br><span class="line">	&#125;</span><br><span class="line">	if (funcs.length === 0) &#123;</span><br><span class="line">		return function (arg) &#123;</span><br><span class="line">			return arg;</span><br><span class="line">		&#125;;</span><br><span class="line">	&#125;</span><br><span class="line">	//如果长度为1，返回该函数</span><br><span class="line">	if (funcs.length === 1) &#123;</span><br><span class="line">		return funcs[0];</span><br><span class="line">	&#125;</span><br><span class="line">	//核心语句reduce嵌套执行所有的函数最后返回一个最终函数</span><br><span class="line">	return funcs.reduce(function (a, b) &#123;</span><br><span class="line">		return function () &#123;</span><br><span class="line">			return a(b.apply(undefined, arguments));</span><br><span class="line">		&#125;;</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>综上其实compose嵌套执行的函数实际上就是类似下面这个栗子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">function f1(next) &#123;</span><br><span class="line">	return function() &#123;</span><br><span class="line">		console.log(&apos;f1 start&apos;)</span><br><span class="line">		next()</span><br><span class="line">		console.log(&apos;f1 end&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">function f2(next) &#123;</span><br><span class="line">	return function() &#123;</span><br><span class="line">		console.log(&apos;f2 start&apos;)</span><br><span class="line">		next()</span><br><span class="line">		console.log(&apos;f2 end&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">function f() &#123;</span><br><span class="line">	console.log(&apos;heart&apos;)</span><br><span class="line">&#125;</span><br><span class="line">f1(f2(f))() //所以最后的综合逻辑函数就是类似这种M1(M2(dispatch))(action)</span><br></pre></td></tr></table></figure>
-<h4 id="creatStore："><a href="#creatStore：" class="headerlink" title="creatStore："></a>creatStore：</h4><p>中间件有关的主要代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">export default function createStore(reducer, preloadedState, enhancer) &#123;</span><br><span class="line">	if (typeof preloadedState === &apos;function&apos; &amp;&amp; typeof enhancer === &apos;undefined&apos;) &#123;</span><br><span class="line">		enhancer = preloadedState</span><br><span class="line">		preloadedState = undefined</span><br><span class="line">	&#125;</span><br><span class="line">	if (typeof enhancer !== &apos;undefined&apos;) &#123;</span><br><span class="line">		if (typeof enhancer !== &apos;function&apos;) &#123;</span><br><span class="line">			throw new Error(&apos;Expected the enhancer to be a function.&apos;)</span><br><span class="line">		&#125;</span><br><span class="line">		return enhancer(createStore)(reducer, preloadedState)</span><br><span class="line">	&#125;</span><br><span class="line">	if (typeof reducer !== &apos;function&apos;) &#123;</span><br><span class="line">		throw new Error(&apos;Expected the reducer to be a function.&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">......</span><br></pre></td></tr></table></figure></p>
-<p>redux的applyMiddle就分析到这边，在了解了这个得基础上，下面就来介绍两个常用的异步流处理的中间件，<code>redux-thunk</code>和 <code>redux-saga</code>，本文就这两个中间件进行探讨和比较其中优劣。</p>
-<h2 id="认识Redux-thunk"><a href="#认识Redux-thunk" class="headerlink" title="认识Redux-thunk"></a>认识Redux-thunk</h2><p>redux-thunk的官方文档是这样介绍的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">从异步的角度，Thunk 是指一切都就绪的会返回某些值的函数。你不用传任何参数，你只需调用它，它便会返回相应的值。</span><br></pre></td></tr></table></figure>
-<p>本栗子结合thunk的使用方式如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//此处dispatch的不是一个action对象而是一个函数</span><br><span class="line">store.dispatch((url)=&gt;(dispatch)=&gt;&#123;</span><br><span class="line">	dispatch(&#123;</span><br><span class="line">		type:&apos;FETCH_POSTS_REQUEST&apos;</span><br><span class="line">	&#125;);//发起请求(象征性的触发一下，表示我准备开始请求了，其实个人感觉不写都无所谓，只是改变了一下fetching的值而已#滑稽)</span><br><span class="line">	fetch(url).then(data =&gt; dispatch(&#123;</span><br><span class="line">		type:&apos;FETCH_POSTS_SUCCESS&apos;,</span><br><span class="line">		payload:data</span><br><span class="line">	&#125;));//请求成功后更新state</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>因此，从上述代码可以看出<code>redux-thunk</code> 的主要思想是扩展 action，使得 action 从一个对象变成一个函数，并且触发dispatch都是从UI进行触发，逻辑都是写在UI。</p>
-<p>那么为什么thunk可以传递一个函数，这里我们来看下源码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function createThunkMiddleware(extraArgument) &#123;</span><br><span class="line">	return (&#123; dispatch, getState &#125;) =&gt; next =&gt; action =&gt; &#123;</span><br><span class="line">		if (typeof action === &apos;function&apos;) &#123;</span><br><span class="line">			return action(dispatch, getState, extraArgument);</span><br><span class="line">		&#125;</span><br><span class="line">		//这里的意思是指如果这个action是函数，那么就执行它，否则next</span><br><span class="line">		return next(action);//将此action传递到下一个middleware</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;</span><br><span class="line">const thunk = createThunkMiddleware();</span><br><span class="line">thunk.withExtraArgument = createThunkMiddleware;</span><br><span class="line">export default thunk;</span><br></pre></td></tr></table></figure>
-<p>但由此可以看出redux-thunk的缺点：</p>
-<ul>
-<li>action 虽然扩展了，但因此变得复杂，后期可维护性降低；</li>
-<li>thunks 内部测试逻辑比较困难，需要mock所有的触发函数（ <code>主要因素</code>）；</li>
-<li>协调并发任务比较困难，当自己的 action 调用了别人的 action，别人的 action 发生改动，则需要自己主动修改；</li>
-<li>业务逻辑会散布在不同的地方：启动的模块，组件以及thunks内部。（<code>主要因素</code>）；</li>
-</ul>
-<h4 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">import &#123;applyMiddleware, createStore&#125; from &apos;redux&apos;;</span><br><span class="line">import axios from &apos;axios&apos;;</span><br><span class="line">import thunk from &apos;redux-thunk&apos;;</span><br><span class="line">const initialState = &#123; fetching: false, fetched: false, users: [], error: null &#125;</span><br><span class="line">const reducer = (state = initialState, action) =&gt; &#123;</span><br><span class="line">	switch(action.type) &#123;</span><br><span class="line">		case &apos;FETCH_POSTS_REQUEST&apos;: &#123;</span><br><span class="line">			return &#123;...state, fetching: true&#125;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">		case &apos;FETCH_POSTS_FAILURE&apos;: &#123;</span><br><span class="line">			return &#123;...state, fetching: false, error: action.payload&#125;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">		case &apos;FETCH_POSTS_SUCCESS&apos;: &#123;</span><br><span class="line">			return &#123;...state, fetching: false, fetched: true, users: action.payload&#125;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return state;</span><br><span class="line">&#125;</span><br><span class="line">const middleware = applyMiddleware(thunk);</span><br><span class="line">store.dispatch((dispatch) =&gt; &#123;</span><br><span class="line">	dispatch(&#123;type: &apos;FETCH_POSTS_REQUEST&apos;&#125;);</span><br><span class="line">	axios.get(&apos;./data.json&apos;).then((response) =&gt; &#123;</span><br><span class="line">		dispatch(&#123;type: &apos;FETCH_POSTS_SUCCESS&apos;, payload: response.data&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line">	.catch((err) =&gt; &#123;</span><br><span class="line">		dispatch(&#123;type: &apos;FETCH_POSTS_FAILURE&apos;, payload: err&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h2 id="认识Redux-saga"><a href="#认识Redux-saga" class="headerlink" title="认识Redux-saga"></a>认识Redux-saga</h2><p>首先什么是saga？<br><code>saga，这个术语常用于CQRS架构，代表查询与责任分离。</code></p>
-<p>saga的作者是个搞房地产的，业余时间写写代码，和阮一峰有点像。</p>
-<p>官方的介绍是这样的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redux-saga 是一个旨在使应用程序副作用（即数据获取等异步操作和获取浏览器缓存等非纯函数操作）更容易管理，执行更有效率，容易测试和解决错误的库。这个构思模型是一个saga就像一个应用程序中仅仅用于解决这些副作用的单线程。</span><br><span class="line">redux-saga是一个redux中间件，具有完全访问redux应用状态，也可以迅速处理redux action，这意味着这个线程可以被主程序中的正常redux action启动、暂停和取消。它利用了es6之中的generators的特点来使这些异步数据流容易读取、写入和测试。这样做，这些异步数据流看起来就像是你的标准的同步JavaScript代码。（类似于async/await），除此之外，generators有一些我们需要的令人惊叹的特征。</span><br></pre></td></tr></table></figure>
-<p>redux-saga 将异步任务进行了集中处理，且方便测试。</p>
-<p>所有的东西都必须被封装在 sagas 中。sagas 包含3个部分，用于联合执行任务：</p>
-<ul>
-<li><code>worker saga</code> ：做所有的工作，如调用 API，进行异步请求，并且获得返回结果。</li>
-<li><code>watcher saga</code> ：监听被 dispatch 的 actions，当接收到 action 或者知道其被触发时，调用 worker saga 执行任务。</li>
-<li><code>root saga</code> ：立即启动 sagas 的唯一入口</li>
-</ul>
-<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><ul>
-<li>使用createSagaMiddleware方法创建saga 的Middleware，然后在创建的redux的store时，使用applyMiddleware函数将创建的sagaMiddleware实例绑定到store上，最后可以调用saga Middleware的run函数来执行某个或者某些Middleware。</li>
-<li>在saga的Middleware中，可以使用takeEvery或者takeLatest等API来监听某个action，当某个action触发后，saga可以使用call、fetch等api发起异步操作，操作完成后使用put函数触发action，同步更新state，从而完成整个State的更新。<br>首先需要启动saga，启动saga一般都写在入口文件中，下面是个栗子：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import &#123; createStore, applyMiddleware&#125; from &apos;redux&apos;;</span><br><span class="line">import createSagaMiddleware from &apos;redux-saga&apos;;</span><br><span class="line">import appReducer from &apos;./reducers&apos;;</span><br><span class="line">const sagaMiddleware = createSagaMiddleware();</span><br><span class="line">const middlewares = [sagaMiddleware];</span><br><span class="line">const store = createStore(appReducer,applyMiddleware(...middlewares));</span><br><span class="line">sagaMiddleware.run(rootSaga);//saga一旦执行就会永远执行下去</span><br><span class="line">render(</span><br><span class="line">	&lt;Provider store=&#123;store&#125;&gt;</span><br><span class="line">		&lt;App /&gt;</span><br><span class="line">	&lt;/Provider&gt;,</span><br><span class="line">	document.getElementById(&apos;app&apos;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-<p>然后，就可以在 sagas 文件夹中集中写 saga 文件了:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import &#123; take, fork, call, put &#125; from &apos;redux-saga/effects&apos;;</span><br><span class="line">//执行函数即work saga</span><br><span class="line">function* fetchUrl(url) &#123;</span><br><span class="line">	try&#123;//利用try-catch来捕获异常</span><br><span class="line">		const data = yield call(fetch, url); // 指示中间件调用 fetch 异步任务</span><br><span class="line">		yield put(&#123; type: &apos;FETCH_POSTS_SUCCESS&apos;, payload:data &#125;); // 指示中间件发起一个 action 到 Store</span><br><span class="line">	&#125;catch(e)&#123;</span><br><span class="line">		yield put(&#123; type: &apos;FETCH_POSTS_FAILURE&apos;, payload:error &#125;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">// 监听函数即watch saga</span><br><span class="line">function* watchFetchRequests() &#123;</span><br><span class="line">	while(true) &#123;</span><br><span class="line">		const action = yield take(&apos;FETCH_POSTS_REQUEST&apos;); // 指示中间件等待 Store 上指定的 action，即监听 action</span><br><span class="line">		yield fork(fetchUrl, action.url); // 指示中间件以无阻塞调用方式执行 fetchUrl</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在 redux-saga 中的基本概念就是：sagas 自身不真正执行副作用（如函数 call），但是会构造一个需要执行副作用的描述。中间件会执行该副作用并把结果返回给 generator 函数。<br>对于sages ，采用 Generator 函数来 yield Effects（包含指令的文本对象）。Generator 函数的作用是可以暂停执行，再次执行的时候从上次暂停的地方继续执行。Effect 是一个简单的对象，该对象包含了一些给 middleware 解释执行的信息。你可以通过使用 effects API 如 fork，call，take，put，cancel 等来创建 Effect。</p>
-<p>关于Effect官方是这样解释的:</p>
-<p><code>在 redux-saga 的世界里，Sagas 都用 Generator 函数实现。我们从 Generator 里 yield 纯 JavaScript 对象以表达 Saga 逻辑。 我们称呼那些对象为 Effect。Effect 是一个简单的对象，这个对象包含了一些给 middleware 解释执行的信息。 你可以把 Effect 看作是发送给middleware 的指令以执行某些操作（调用某些异步函数，发起一个 action 到 store）。</code></p>
-<p>对上述例子的说明：</p>
-<ul>
-<li>引入的 redux-saga/effects 都是纯函数，每个函数构造一个特殊的对象，其中包含着中间件需要执行的指令，如：call(fetchUrl, url) 返回一个类似于 {type: CALL, function: fetchUrl, args: [url]} 的对象。</li>
-<li>在 watcher saga watchFetchRequests中：<br>首先 yield take(‘FETCH_REQUEST’) 来告诉中间件我们正在等待一个类型为 FETCH_REQUEST 的 action，然后中间件会暂停执行<br>wacthFetchRequests generator 函数，直到 FETCH_REQUEST action 被 dispatch。一旦我们获得了匹配的 action，中间件就会恢复执行 generator 函数。下一条指令 fork(fetchUrl, action.url) 告诉中间件去无阻塞调用一个新的 fetchUrl 任务，action.url 作为 fetchUrl 函数的参数传递。中间件会触发 fetchUrl generator 并且不会阻塞 watchFetchRequests。当fetchUrl 开始执行的时候，watchFetchRequests会继续监听其它的 watchFetchRequests actions。当然，JavaScript 是单线程的，redux-saga 让事情看起来是同时进行的。</li>
-<li>在 worker saga fetchUrl 中，call(fetch,url) 指示中间件去调用 fetch 函数，同时，会阻塞fetchUrl 的执行，中间件会停止 generator 函数，直到 fetch 返回的 Promise 被 resolved（或 rejected），然后才恢复执行 generator 函数。</li>
-</ul>
-<p>这里我们可以来看一波源码，搞清楚这个Effect到底是什么。<br>对于Effect对象的定义，写在了 <code>redux-saga/src/internal/io.js</code> 文件中，下面是Effect的定义。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const effect = (type, payload) =&gt; (&#123; [IO]: true, [type]: payload &#125;);</span><br></pre></td></tr></table></figure>
-<p>很简单就一句话，表明这个effect其实就是返回了一个对象。</p>
-<p>接下来看看所谓的put和call到底是个什么东西</p>
-<h5 id="put"><a href="#put" class="headerlink" title="put"></a>put</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">export function put(channel, action) &#123;</span><br><span class="line">	if (process.env.NODE_ENV === &apos;development&apos;) &#123;</span><br><span class="line">		if (arguments.length &gt; 1) &#123;</span><br><span class="line">			check(channel, is.notUndef, &apos;put(channel, action): argument channel is undefined&apos;)</span><br><span class="line">			check(channel, is.channel, `put(channel, action): argument $&#123;channel&#125; is not a valid channel`)</span><br><span class="line">			check(action, is.notUndef, &apos;put(channel, action): argument action is undefined&apos;)</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			check(channel, is.notUndef, &apos;put(action): argument action is undefined&apos;)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	if (is.undef(action)) &#123;</span><br><span class="line">		action = channel</span><br><span class="line">		channel = null</span><br><span class="line">	&#125;</span><br><span class="line">	return effect(PUT, &#123; channel, action &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="call"><a href="#call" class="headerlink" title="call"></a>call</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">function getFnCallDesc(meth, fn, args) &#123;</span><br><span class="line">	if (process.env.NODE_ENV === &apos;development&apos;) &#123;</span><br><span class="line">		check(fn, is.notUndef, `$&#123;meth&#125;: argument fn is undefined`)</span><br><span class="line">	&#125;</span><br><span class="line">	let context = null</span><br><span class="line">	if (is.array(fn)) &#123;</span><br><span class="line">		[context, fn] = fn</span><br><span class="line">	&#125; else if (fn.fn) &#123;</span><br><span class="line">		(&#123; context, fn &#125; = fn)</span><br><span class="line">	&#125;</span><br><span class="line">	if (context &amp;&amp; is.string(fn) &amp;&amp; is.func(context[fn])) &#123;</span><br><span class="line">		fn = context[fn]</span><br><span class="line">	&#125;</span><br><span class="line">	if (process.env.NODE_ENV === &apos;development&apos;) &#123;</span><br><span class="line">		check(fn, is.func, `$&#123;meth&#125;: argument $&#123;fn&#125; is not a function`)</span><br><span class="line">	&#125;</span><br><span class="line">	return &#123; context, fn, args &#125;</span><br><span class="line">&#125;</span><br><span class="line">export function call(fn, ...args) &#123;</span><br><span class="line">	return effect(CALL, getFnCallDesc(&apos;call&apos;, fn, args))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>出乎意料都是只返回了一个纯对象（ <code>先不管细节</code> ）。<br>effect返回的纯对象由于generate函数的机制会将yield的控制权交给外部，用来给generator外层的执行容器task( <code>这东西我讲不清楚所以就不讲了</code> )发送一个信号，告诉task该做什么。task在接收到effect发出的指令后将会执行下面这段函数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">function next(arg, isErr) &#123;</span><br><span class="line">	// Preventive measure. If we end up here, then there is really something wrong</span><br><span class="line">	if (!mainTask.isRunning) &#123;</span><br><span class="line">		throw new Error(&apos;Trying to resume an already finished generator&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	try &#123;</span><br><span class="line">		let result</span><br><span class="line">		if (isErr) &#123;</span><br><span class="line">			result = iterator.throw(arg)</span><br><span class="line">		&#125; else if (arg === TASK_CANCEL) &#123;</span><br><span class="line">			/**</span><br><span class="line">			getting TASK_CANCEL automatically cancels the main task</span><br><span class="line">			We can get this value here</span><br><span class="line">			- By cancelling the parent task manually</span><br><span class="line">			- By joining a Cancelled task</span><br><span class="line">			**/</span><br><span class="line">			mainTask.isCancelled = true</span><br><span class="line">			/**</span><br><span class="line">			Cancels the current effect; this will propagate the cancellation down to any called tasks</span><br><span class="line">			**/</span><br><span class="line">			next.cancel()</span><br><span class="line">			/**</span><br><span class="line">			If this Generator has a `return` method then invokes it</span><br><span class="line">			This will jump to the finally block</span><br><span class="line">			**/</span><br><span class="line">			result = is.func(iterator.return) ? iterator.return(TASK_CANCEL) : &#123; done: true, value: TASK_CANCEL &#125;</span><br><span class="line">		&#125; else if (arg === CHANNEL_END) &#123;</span><br><span class="line">			// We get CHANNEL_END by taking from a channel that ended using `take` (and not `takem` used to trap</span><br><span class="line">			End of channels)</span><br><span class="line">			result = is.func(iterator.return) ? iterator.return() : &#123; done: true &#125;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			result = iterator.next(arg)//这里将会执行generator并将结果赋值给result</span><br><span class="line">		&#125;</span><br><span class="line">		if (!result.done) &#123;//这里会判断这个generator是否执行完毕</span><br><span class="line">			runEffect(result.value, parentEffectId, &apos;&apos;, next) //这里的runEffect就是各种执行结果的返回（全部流程到此结束）</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			/**</span><br><span class="line">			This Generator has ended, terminate the main task and notify the fork queue</span><br><span class="line">			**/</span><br><span class="line">			mainTask.isMainRunning = false</span><br><span class="line">			mainTask.cont &amp;&amp; mainTask.cont(result.value)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; catch (error) &#123;</span><br><span class="line">		if (mainTask.isCancelled) &#123;</span><br><span class="line">			log(&apos;error&apos;, `uncaught at $&#123;name&#125;`, error.message)</span><br><span class="line">		&#125;</span><br><span class="line">		mainTask.isMainRunning = false</span><br><span class="line">		mainTask.cont(error, true)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Redux-saga优点"><a href="#Redux-saga优点" class="headerlink" title="Redux-saga优点"></a>Redux-saga优点</h3><ul>
-<li>声明式 Effects：所有的操作以JavaScript对象的方式被 yield，并被 middleware 执行。使得在 saga 内部测试变得更加容易，可以通过简单地遍历 Generator 并在 yield 后的成功值上面做一个 deepEqual 测试。</li>
-<li>高级的异步控制流以及并发管理：可以使用简单的同步方式描述异步流，并通过 fork(无阻塞) 实现并发任务。</li>
-<li>架构上的优势：将所有的异步流程控制都移入到了 sagas，UI 组件不用执行业务逻辑，只需 dispatch action 就行，增强组件复用性。</li>
-</ul>
-<p>Edit by AmamiRyoin</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2016,7 +2011,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
