@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="node,webpack," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="AmamiRyoin's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="去除无用的样式安装： npm i purgecss-webpack-plugin glob -D 12345678910111213// 去除无用的样式const glob = require(&apos;glob&apos;);const PurgecssWebpackPlugin = require(&apos;purgecss-webpack-plugin&apos;);plugins: [    new HtmlWebpaclP">
+<meta name="keywords" content="node,webpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack使用心得总结">
+<meta property="og:url" content="http://yoursite.com/2020/12/02/webpack/index.html">
+<meta property="og:site_name" content="AmamiRyoin&#39;s Blog">
+<meta property="og:description" content="去除无用的样式安装： npm i purgecss-webpack-plugin glob -D 12345678910111213// 去除无用的样式const glob = require(&apos;glob&apos;);const PurgecssWebpackPlugin = require(&apos;purgecss-webpack-plugin&apos;);plugins: [    new HtmlWebpaclP">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-03-24T04:32:23.816Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webpack使用心得总结">
+<meta name="twitter:description" content="去除无用的样式安装： npm i purgecss-webpack-plugin glob -D 12345678910111213// 去除无用的样式const glob = require(&apos;glob&apos;);const PurgecssWebpackPlugin = require(&apos;purgecss-webpack-plugin&apos;);plugins: [    new HtmlWebpaclP">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/12/02/webpack/"/>
+
+
+
+
+
+  <title>webpack使用心得总结 | AmamiRyoin's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AmamiRyoin's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">守得云开见月明</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+      <!-- 自定义High一下的功能 -->
+      <li class="menu-item"> <a title="把这个链接拖到你的工具栏中,任何网页都可以High" href='javascript:(
+    function go() {
+
+
+    var songs = [
+        "/music/ashita.mp3",
+        "/music/lemon.mp3",
+    ];
+
+    function c() {
+        var e = document.createElement("link");
+        e.setAttribute("type", "text/css");
+        e.setAttribute("rel", "stylesheet");
+        e.setAttribute("href", f);
+        e.setAttribute("class", l);
+        document.body.appendChild(e)
+    }
+ 
+    function h() {
+        var e = document.getElementsByClassName(l);
+        for (var t = 0; t < e.length; t++) {
+            document.body.removeChild(e[t])
+        }
+    }
+ 
+    function p() {
+        var e = document.createElement("div");
+        e.setAttribute("class", a);
+        document.body.appendChild(e);
+        setTimeout(function() {
+            document.body.removeChild(e)
+        }, 100)
+    }
+ 
+    function d(e) {
+        return {
+            height : e.offsetHeight,
+            width : e.offsetWidth
+        }
+    }
+ 
+    function v(i) {
+        var s = d(i);
+        return s.height > e && s.height < n && s.width > t && s.width < r
+    }
+ 
+    function m(e) {
+        var t = e;
+        var n = 0;
+        while (!!t) {
+            n += t.offsetTop;
+            t = t.offsetParent
+        }
+        return n
+    }
+ 
+    function g() {
+        var e = document.documentElement;
+        if (!!window.innerWidth) {
+            return window.innerHeight
+        } else if (e && !isNaN(e.clientHeight)) {
+            return e.clientHeight
+        }
+        return 0
+    }
+ 
+    function y() {
+        if (window.pageYOffset) {
+            return window.pageYOffset
+        }
+        return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+    }
+ 
+    function E(e) {
+        var t = m(e);
+        return t >= w && t <= b + w
+    }
+
+    function S() {
+        var e = document.getElementById("audio_element_id");
+        if(e != null){
+            var index = parseInt(e.getAttribute("curSongIndex"));
+            if(index > songs.length - 2) {
+                index = 0;
+            } else {
+                index++;
+            }
+            e.setAttribute("curSongIndex", index);
+            N();
+        }
+
+        e.src = i;
+        e.play()
+    }
+ 
+    function x(e) {
+        e.className += " " + s + " " + o
+    }
+ 
+    function T(e) {
+        e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+    }
+ 
+    function N() {
+        var e = document.getElementsByClassName(s);
+        var t = new RegExp("\\b" + s + "\\b");
+        for (var n = 0; n < e.length; ) {
+            e[n].className = e[n].className.replace(t, "")
+        }
+    }
+
+    function initAudioEle() {
+        var e = document.getElementById("audio_element_id");
+        if(e === null){
+            e = document.createElement("audio");
+            e.setAttribute("class", l);
+            e.setAttribute("curSongIndex", 0);
+            e.id = "audio_element_id";
+            e.loop = false;
+            e.bgcolor = 0;
+            e.addEventListener("canplay", function() {
+            setTimeout(function() {
+                x(k)
+            }, 500);
+            setTimeout(function() {
+                N();
+                p();
+                for (var e = 0; e < O.length; e++) {
+                    T(O[e])
+                }
+            }, 15500)
+        }, true);
+        e.addEventListener("ended", function() {
+            N();
+            h();
+            go();
+        }, true);
+        e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+        document.body.appendChild(e);
+        }
+    }
+    
+    initAudioEle();
+    var e = 30;
+    var t = 30;
+    var n = 350;
+    var r = 350;
+
+    var curSongIndex = parseInt(document.getElementById("audio_element_id").getAttribute("curSongIndex"));
+    var i = songs[curSongIndex];
+    
+    var s = "mw-harlem_shake_me";
+    var o = "im_first";
+    var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+    var a = "mw-strobe_light";
+
+    /* harlem-shake-style.css，替换成你的位置，也可以直接使用：//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css */
+    var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+    
+    var l = "mw_added_css";
+    var b = g();
+    var w = y();
+    var C = document.getElementsByTagName("*");
+    var k = null;
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            if (E(A)) {
+                k = A;
+                break
+            }
+        }
+    }
+    if (A === null) {
+        console.warn("Could not find a node of the right size. Please try a different page.");
+        return
+    }
+    c();
+    S();
+    var O = [];
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            O.push(A)
+        }
+    }
+    })()'><i class="menu-item-icon fa fa-music fa-fw"></i>High一下</a> </li>
+      <!-- end High一下 -->
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/02/webpack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AmamiRyoin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/headImg/head_Img.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AmamiRyoin's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">webpack使用心得总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-12-02T17:10:03+08:00">
+                2020-12-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="去除无用的样式"><a href="#去除无用的样式" class="headerlink" title="去除无用的样式"></a>去除无用的样式</h3><p>安装： npm i purgecss-webpack-plugin glob -D</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 去除无用的样式</span></span><br><span class="line"><span class="keyword">const</span> glob = <span class="built_in">require</span>(<span class="string">'glob'</span>);</span><br><span class="line"><span class="keyword">const</span> PurgecssWebpackPlugin = <span class="built_in">require</span>(<span class="string">'purgecss-webpack-plugin'</span>);</span><br><span class="line">plugins: [</span><br><span class="line">    <span class="keyword">new</span> HtmlWebpaclPlugin(&#123;</span><br><span class="line">        template: <span class="string">'./src/index.html'</span></span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="keyword">new</span> MiniCssExtractPlugin(),</span><br><span class="line">    <span class="comment">// 去除无用的样式</span></span><br><span class="line">    <span class="keyword">new</span> PurgecssWebpackPlugin(&#123;</span><br><span class="line">        paths: glob.sync(<span class="string">'./src/**/*'</span>, &#123;<span class="attr">nodir</span>: <span class="literal">true</span>&#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>下面我们来简单分析分析：</p>
+<p>glob是用来查找文件的<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">glob.sync(<span class="string">'./src/**/*'</span>, &#123;<span class="attr">nodir</span>: <span class="literal">true</span>&#125;</span><br><span class="line"><span class="comment">// 同步查找src目录下的任意文件夹下的任意文件</span></span><br><span class="line"><span class="comment">// 返回一个数组，如['真实路径/src/css/style.css','真实路径/src/index.js',...]</span></span><br><span class="line"><span class="comment">// &#123;nodir: true&#125;表示不包含文件夹，加快查找速度</span></span><br></pre></td></tr></table></figure></p>
+<p>purgecss-webpack-plugin是去除无用的css<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> PurgecssWebpackPlugin(&#123;</span><br><span class="line">    <span class="comment">// paths表示指定要去解析的文件名数组路径</span></span><br><span class="line">    <span class="comment">// Purgecss会去解析这些文件然后把无用的样式移除</span></span><br><span class="line">    paths: glob.sync(<span class="string">'./src/**/*'</span>, &#123;<span class="attr">nodir</span>: <span class="literal">true</span>&#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="动态添加CDN"><a href="#动态添加CDN" class="headerlink" title="动态添加CDN"></a>动态添加CDN</h3><p>在html文件中引入cdn文件，在webpack配置externals，这样就不会打包引入的cdn的库</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.html文件</span></span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id=<span class="string">"root"</span>&gt;&lt;/div&gt;</span><br><span class="line">    &lt;!-- 引入jquery的cdn --&gt;</span><br><span class="line">    &lt;script src=<span class="string">"https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;<span class="regexp">/body&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ webpack.config.js文件</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">module.exports = &#123;</span></span><br><span class="line"><span class="regexp">    externals: &#123;</span></span><br><span class="line"><span class="regexp">        'jquery': '$'</span></span><br><span class="line"><span class="regexp">    &#125;   </span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这样写完后，在js文件中我们就可以不用再导入jquery也能直接使用$操作符了</p>
+<p>由于每次都需要在index.html模板中手动引入需要的cdn文件，然后还要在webpack里配置，有点繁琐了</p>
+<p>So，html-webpack-externals-plugin这样的插件就应运而生了<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 动态添加CDN</span></span><br><span class="line"><span class="keyword">const</span> HtmlWebpackExternalsPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-externals-plugin'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> HtmlWebpackExternalsPlugin(&#123;</span><br><span class="line">            externals: [</span><br><span class="line">                &#123;   <span class="comment">// 引入的模块</span></span><br><span class="line">                    <span class="built_in">module</span>: <span class="string">'jquery'</span>,</span><br><span class="line">                    <span class="comment">// cdn的地址</span></span><br><span class="line">                    entry: <span class="string">'https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js'</span>,</span><br><span class="line">                    <span class="comment">// 挂载到了window上的名称</span></span><br><span class="line">                    <span class="comment">// window.jQuery就可以全局使用</span></span><br><span class="line">                    global: <span class="string">'jQuery'</span></span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="DllPlugin动态链接库"><a href="#DllPlugin动态链接库" class="headerlink" title="DllPlugin动态链接库"></a>DllPlugin动态链接库</h3><p>很多时候我们在开发时无论是用React还是Vue，我们都不希望这个开发的主力框架每次都被打包一遍，这样也是费时费力的事情</p>
+<p>所以，出现了DllPlugin这种插件，它纯属webpack内置的，放心大胆的用</p>
+<p><strong>作用：</strong></p>
+<ol>
+<li>在第一次打包的时候就把打包用到的开发框架直接打包好，然后会生成一个manifest.json文件</li>
+<li>再打包的的时候，只要有import React from ‘react’这样的引用，它就会先去所谓的缓存文件里找，找到了就直接用，也不用再进行对react打包了</li>
+<li>如果没找到的话，再对框架打包一遍也无伤大雅</li>
+</ol>
+<p><strong>创建动态链接库</strong><br>在根目录下创建一个webpack.dll.js文件，用来打包出dll文件<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="comment">// 引入webpack</span></span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: [<span class="string">'react'</span>, <span class="string">'react-dom'</span>],</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: <span class="string">'react.dll.js'</span>,</span><br><span class="line">        path: path.resolve(<span class="string">'dll'</span>),</span><br><span class="line">        library: <span class="string">'react'</span>    <span class="comment">// 打包后被引用的变量名</span></span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="comment">// 动态链接库</span></span><br><span class="line">        <span class="keyword">new</span> webpack.DllPlugin(&#123;</span><br><span class="line">            name: <span class="string">'react'</span>,</span><br><span class="line">            path: path.resolve(<span class="string">'dll'</span>, <span class="string">'manifest.json'</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>代码写完了，npm run dll，之后会出现一个dll的文件夹，里面会包含你打包出来的文件</p>
+<p><strong>引用动态链接库</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="comment">// 引入webpack</span></span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="comment">// 引用对应的动态链接库的manifest.json文件</span></span><br><span class="line">        <span class="comment">// 这样以后再引入react的时候就会优先在json文件里去寻找</span></span><br><span class="line">        <span class="keyword">new</span> webpack.DllReferencePlugin(&#123;</span><br><span class="line">            manifest: path.resolve(<span class="string">'dll'</span>, <span class="string">'manifest.json'</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>写到这里还不算完，还需要在src目录下的index.html模板中引入一下<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../dll/react.dll.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>之所以，会新建一个dll目录，因为在npm start开发环境编译的时候，dist目录的内容都在内存中了，是找不到react.dll.js文件的</p>
+<p><strong>动态引入js</strong><br>通过add-asset-html-webpack-plugin插件就可以完成这样的需求<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js文件</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"><span class="comment">// 添加资源到html文件</span></span><br><span class="line"><span class="keyword">const</span> AddAssetHtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'add-asset-html-webpack-plugin'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="comment">// 引用打包好的react，不会打包到bundle里</span></span><br><span class="line">        <span class="keyword">new</span> webpack.DllReferencePlugin(&#123;</span><br><span class="line">            manifest: path.resolve(<span class="string">'dll'</span>, <span class="string">'manifest.json'</span>)</span><br><span class="line">        &#125;),</span><br><span class="line">        <span class="comment">// 直接将打包好的react.dll.js添加到html模板</span></span><br><span class="line">        <span class="keyword">new</span> AddAssetHtmlWebpackPlugin(&#123;</span><br><span class="line">            filepath: path.resolve(<span class="string">'dll'</span>, <span class="string">'react.dll.js'</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="懒加载"><a href="#懒加载" class="headerlink" title="懒加载"></a>懒加载</h3><p>说到懒加载必然是一种很好的优化网页或应用的方式，那么在webpack中也是通过ES6的import()语法来引入的。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, Fragment &#125; <span class="keyword">from</span> <span class="string">"react"</span>;</span><br><span class="line"><span class="keyword">import</span> moment <span class="keyword">from</span> <span class="string">"moment"</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">"moment/locale/zh-cn"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置中文</span></span><br><span class="line"><span class="comment">// moment.locale("zh-cn");</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">List</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  btnClick = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">import</span>(<span class="string">"./test"</span>).then(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(data);</span><br><span class="line">      data.a();</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log($);</span><br><span class="line">    <span class="keyword">let</span> time = moment().format(<span class="string">"YYYY-MM-DD HH:mm:ss"</span>);</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;Fragment&gt;</span><br><span class="line">        &lt;div&gt;&#123;time&#125;&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">        &lt;div&gt;111&lt;/</span>div&gt;</span><br><span class="line">        &lt;button onClick=&#123;<span class="keyword">this</span>.btnClick&#125;&gt;<span class="number">222</span>&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>Fragment&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="抽取公共代码"><a href="#抽取公共代码" class="headerlink" title="抽取公共代码"></a>抽取公共代码</h3><p>比如有两个js文件，一个是index.js另一个是lrc.js，它们都引用了著名的实用工具库lodash，代码如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js文件</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">'lodash'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(_.xor([<span class="number">2</span>, <span class="number">1</span>], [<span class="number">2</span>, <span class="number">3</span>]));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// lrc.js文件</span></span><br><span class="line"><span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">'lodash'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(_.flatten([<span class="number">1</span>,[<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, [<span class="number">2</span>]]]));</span><br></pre></td></tr></table></figure>
+<p><strong>抽取第三方模块</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js文件</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    optimization: &#123;</span><br><span class="line">        splitChunks: &#123;</span><br><span class="line">            cacheGroups: &#123;</span><br><span class="line">                vendor: &#123;</span><br><span class="line">                    chunks: <span class="string">'initial'</span>,</span><br><span class="line">                    minSize: <span class="number">0</span>,</span><br><span class="line">                    minChunks: <span class="number">2</span>,</span><br><span class="line">                    test: <span class="regexp">/node_modules/</span>,</span><br><span class="line">                    priority: <span class="number">1</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p><strong>抽取公共模块</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js文件</span></span><br><span class="line"><span class="keyword">import</span> &#123; flatten &#125; <span class="keyword">from</span> <span class="string">'./common'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'index'</span>,flatten([<span class="number">1</span>,[<span class="number">33</span>, <span class="number">4</span>, <span class="number">5</span>, [<span class="number">34</span>]]]));</span><br><span class="line"></span><br><span class="line"><span class="comment">// lrc.js文件</span></span><br><span class="line"><span class="keyword">import</span> &#123;flatten&#125; <span class="keyword">from</span> <span class="string">'./common'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(flatten([<span class="number">1</span>,[<span class="number">33</span>, <span class="number">4</span>, <span class="number">5</span>, [<span class="number">34</span>]]]));</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js文件</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    optimization: &#123;</span><br><span class="line">        splitChunks: &#123;</span><br><span class="line">            cacheGroups: &#123;</span><br><span class="line">                utils: &#123;</span><br><span class="line">                    chunks: <span class="string">'initial'</span>,</span><br><span class="line">                    minSize: <span class="number">0</span>,</span><br><span class="line">                    minChunks: <span class="number">2</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="IgnorePlugin"><a href="#IgnorePlugin" class="headerlink" title="IgnorePlugin"></a>IgnorePlugin</h3><p>作用： 忽略打包第三方模块指定的目录</p>
+<p>为什么要忽略呢？ 通过下面的栗子来看一下</p>
+<p>相信很多人应该或多或少的都听过moment这个时间库，不知道也没关系，我来演示一波</p>
+<p>先安装moment： npm i moment -S</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 导入moment</span></span><br><span class="line"><span class="keyword">import</span> moment <span class="keyword">from</span> <span class="string">'moment'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置中文</span></span><br><span class="line">moment.locale(<span class="string">'zh-cn'</span>);</span><br><span class="line"><span class="keyword">let</span> time = moment().endOf(<span class="string">'day'</span>).fromNow();</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.root.innerHTML += time;</span><br></pre></td></tr></table></figure>
+<p>页面上展示的一点毛病都没有，不过如果看一下打包的情况就会发现有瑕疵了</p>
+<p>设置了中文，却把整个语言包都打包进去了，这样很不好</p>
+<p>这是神马原因呢，其实是因为moment被导入的时候，附赠了整个locale语言包，这种买一赠一的行为就不用提现在代码世界了，吃不消了</p>
+<p>我们需要用中文包，但是不想打包全部语言包，就让IgnorePlugin出马了<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js文件</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="comment">// 忽略moment目录下的locale文件夹</span></span><br><span class="line">        <span class="keyword">new</span> webpack.IgnorePlugin(<span class="regexp">/\.\/locale/</span>, /moment/)</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>配置改写后，再回到index.js中单独导入中文语言包就好了<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 利用IgnorePlugin把只需要的语言包导入使用就可以了，省去了一下子打包整个语言包</span></span><br><span class="line"><span class="keyword">import</span> moment <span class="keyword">from</span> <span class="string">'moment'</span>;</span><br><span class="line"><span class="comment">// 单独导入中文语言包</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'moment/locale/zh-cn'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> time = moment().endOf(<span class="string">'day'</span>).fromNow();</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.root.innerHTML += time;</span><br></pre></td></tr></table></figure></p>
+<h3 id="noParse"><a href="#noParse" class="headerlink" title="noParse"></a>noParse</h3><p>noParse的作用是不去解析你所使用的第三方库中的依赖库</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        <span class="comment">// 不去解析jquery或lodash中的依赖库</span></span><br><span class="line">        noParse: <span class="regexp">/jquery|lodash/</span>,  </span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">                use: &#123;</span><br><span class="line">                    loader: <span class="string">'babel-loader'</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在工作中，忽略大型的库可以提高构建性能，可以从构建时间上看出来速度的提升，如上面代码中提到的jquery和lodash</p>
+<h3 id="resolve"><a href="#resolve" class="headerlink" title="resolve"></a>resolve</h3><p>从这个英文就能看出来，它就是配置模块如何解析用的，配置太多也没必要一一介绍了，还是直接说重点写出常用的配置吧</p>
+<p><strong>resolve常用配置</strong></p>
+<ol>
+<li>modules<ol>
+<li>指定解析第三方包的目录位置</li>
+</ol>
+</li>
+<li>alias<ol>
+<li>指定import导入时的别名，简化引入</li>
+</ol>
+</li>
+<li>extensions<ol>
+<li>自动解析确定好的扩展名</li>
+<li>默认会把js和json当做扩展名</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; resolve &#125; = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    resolve: &#123;</span><br><span class="line">        modules: [resolve(<span class="string">'node_modules'</span>)],</span><br><span class="line">        alias: &#123;</span><br><span class="line">            Utils: resolve(__dirname, <span class="string">'src/utils/'</span>),</span><br><span class="line">            <span class="string">'@'</span>: resolve(__dirname, <span class="string">'src'</span>)</span><br><span class="line">        &#125;,</span><br><span class="line">        extensions: [<span class="string">'.js'</span>, <span class="string">'.css'</span>, <span class="string">'.json'</span>]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="include和exclude"><a href="#include和exclude" class="headerlink" title="include和exclude"></a>include和exclude</h3><ol>
+<li>include: 包含指定目录下的文件解析</li>
+<li>exclude: 排除指定目录不进行解析</li>
+</ol>
+<p>二者使用一个即可了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">                use: &#123;</span><br><span class="line">                    loader: <span class="string">'babel-loader'</span></span><br><span class="line">                &#125;,</span><br><span class="line">                exculde: <span class="regexp">/node_modules/</span>,    <span class="comment">// 二选一</span></span><br><span class="line">                include: path.resolve(<span class="string">'src'</span>)    <span class="comment">// 二选一</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="happypack"><a href="#happypack" class="headerlink" title="happypack"></a>happypack</h3><p>webpack在Node环境下运行所以也是单线程操作，一件一件的去处理事情。<br>于是乎，就有了happypack的用武之地了，它的作用就是可以实现多进程打包操作</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js文件</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Happypack = <span class="built_in">require</span>(<span class="string">'happypack'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">                use: <span class="string">'Happypack/loader?id=js'</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">                use: <span class="string">'Happypack/loader?id=css'</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> Happypack(&#123;</span><br><span class="line">            id: <span class="string">'js'</span>,</span><br><span class="line">            loaders: [</span><br><span class="line">                &#123;</span><br><span class="line">                    loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">                    options: &#123;</span><br><span class="line">                        presets: [</span><br><span class="line">                            <span class="string">'@babel/preset-env'</span>,</span><br><span class="line">                            <span class="string">'@babel/preset-react'</span></span><br><span class="line">                        ]</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;),</span><br><span class="line">        <span class="keyword">new</span> Happypack(&#123;</span><br><span class="line">            id: <span class="string">'css'</span>,</span><br><span class="line">            loaders: [<span class="string">'style-loader'</span>, <span class="string">'css-loader'</span>]</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于HappyPack 对file-loader、url-loader 支持的不友好，所以不建议对该loader使用。</p>
+<p><strong>HappyPack 参数</strong></p>
+<ol>
+<li><strong>id</strong>: String 用唯一的标识符 id 来代表当前的 HappyPack 是用来处理一类特定的文件.</li>
+<li><strong>loaders</strong>: Array 用法和 webpack Loader 配置中一样.</li>
+<li><strong>threads</strong>: Number 代表开启几个子进程去处理这一类型的文件，默认是3个，类型必须是整数。</li>
+<li><strong>verbose</strong>: Boolean 是否允许 HappyPack 输出日志，默认是 true。</li>
+<li><strong>threadPool:</strong> HappyThreadPool 代表共享进程池，即多个 HappyPack 实例都使用同一个共享进程池中的子进程去处理任务，以防止资源占用过多。</li>
+<li><strong>verboseWhenProfiling</strong>: Boolean 开启webpack –profile ,仍然希望HappyPack产生输出。</li>
+<li><strong>debug</strong>: Boolean 启用debug 用于故障排查。默认 false。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>觉得不错的话可以打赏哦</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="AmamiRyoin 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/node/" rel="tag"># node</a>
+          
+            <a href="/tags/webpack/" rel="tag"># webpack</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/12/js设计模式/" rel="next" title="JS中的设计模式">
+                <i class="fa fa-chevron-left"></i> JS中的设计模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/03/09/svelte/" rel="prev" title="Svelte浅谈">
+                Svelte浅谈 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/headImg/head_Img.jpg"
+                alt="AmamiRyoin" />
+            
+              <p class="site-author-name" itemprop="name">AmamiRyoin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/AmamiRyoin" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/RyoinAmami" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#去除无用的样式"><span class="nav-number">1.</span> <span class="nav-text">去除无用的样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态添加CDN"><span class="nav-number">2.</span> <span class="nav-text">动态添加CDN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DllPlugin动态链接库"><span class="nav-number">3.</span> <span class="nav-text">DllPlugin动态链接库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#懒加载"><span class="nav-number">4.</span> <span class="nav-text">懒加载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抽取公共代码"><span class="nav-number">5.</span> <span class="nav-text">抽取公共代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IgnorePlugin"><span class="nav-number">6.</span> <span class="nav-text">IgnorePlugin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#noParse"><span class="nav-number">7.</span> <span class="nav-text">noParse</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#resolve"><span class="nav-number">8.</span> <span class="nav-text">resolve</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#include和exclude"><span class="nav-number">9.</span> <span class="nav-text">include和exclude</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#happypack"><span class="nav-number">10.</span> <span class="nav-text">happypack</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AmamiRyoin</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  <canvas></canvas>
+  <script type="text/javascript">
+    document.getElementsByTagName('canvas')[0].style="position:fixed;top:0;bottom:0;left:0;right:0;width: 100%;height: 100%;pointer-events: none;z-index: -1;";
+    document.addEventListener('touchmove', function (e) {
+                e.preventDefault()
+            })
+            var c = document.getElementsByTagName('canvas')[0],
+                x = c.getContext('2d'),
+                pr = window.devicePixelRatio || 1,
+                w = window.innerWidth,
+                h = window.innerHeight,
+                f = 90,
+                q,
+                m = Math,
+                r = 0,
+                u = m.PI*2,
+                v = m.cos,
+                z = m.random
+            c.width = w*pr
+            c.height = h*pr
+            x.scale(pr, pr)
+            x.globalAlpha = 0.6
+            function i(){
+                x.clearRect(0,0,w,h)
+                q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
+                while(q[1].x<w+f) d(q[0], q[1])
+            }
+            function d(i,j){
+                x.beginPath()
+                x.moveTo(i.x, i.y)
+                x.lineTo(j.x, j.y)
+                var k = j.x + (z()*2-0.25)*f,
+                    n = y(j.y)
+                x.lineTo(k, n)
+                x.closePath()
+                r-=u/-50
+                x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16)
+                x.fill()
+                q[0] = q[1]
+                q[1] = {x:k,y:n}
+            }
+            function y(p){
+                var t = p + (z()*2-1.1)*f
+                return (t>h||t<0) ? y(p) : t
+            }
+            document.onclick = i
+            document.ontouchstart = i
+            i()
+  </script>
+</body>
+</html>

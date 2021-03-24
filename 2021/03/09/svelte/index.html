@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Svelte," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="AmamiRyoin's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="探索Svelte什么是SvelteSvelte本意是苗条纤瘦的，Svelte是一种构建用户界面的全新方法，它被预测为未来十年可能取代React和Vue等其他框架的新兴技术。作者是前端轮子哥 Rich Harris，同时也是 Rollup 的作者。 他设计 Svelte 的核心思想在于『通过静态编译减少框架运行时的代码量』，也就是说，vue 和 react 这类传统的框架，都必须引入运行时 (run">
+<meta name="keywords" content="Svelte">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Svelte浅谈">
+<meta property="og:url" content="http://yoursite.com/2021/03/09/svelte/index.html">
+<meta property="og:site_name" content="AmamiRyoin&#39;s Blog">
+<meta property="og:description" content="探索Svelte什么是SvelteSvelte本意是苗条纤瘦的，Svelte是一种构建用户界面的全新方法，它被预测为未来十年可能取代React和Vue等其他框架的新兴技术。作者是前端轮子哥 Rich Harris，同时也是 Rollup 的作者。 他设计 Svelte 的核心思想在于『通过静态编译减少框架运行时的代码量』，也就是说，vue 和 react 这类传统的框架，都必须引入运行时 (run">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-03-24T04:32:19.632Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Svelte浅谈">
+<meta name="twitter:description" content="探索Svelte什么是SvelteSvelte本意是苗条纤瘦的，Svelte是一种构建用户界面的全新方法，它被预测为未来十年可能取代React和Vue等其他框架的新兴技术。作者是前端轮子哥 Rich Harris，同时也是 Rollup 的作者。 他设计 Svelte 的核心思想在于『通过静态编译减少框架运行时的代码量』，也就是说，vue 和 react 这类传统的框架，都必须引入运行时 (run">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2021/03/09/svelte/"/>
+
+
+
+
+
+  <title>Svelte浅谈 | AmamiRyoin's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AmamiRyoin's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">守得云开见月明</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+      <!-- 自定义High一下的功能 -->
+      <li class="menu-item"> <a title="把这个链接拖到你的工具栏中,任何网页都可以High" href='javascript:(
+    function go() {
+
+
+    var songs = [
+        "/music/ashita.mp3",
+        "/music/lemon.mp3",
+    ];
+
+    function c() {
+        var e = document.createElement("link");
+        e.setAttribute("type", "text/css");
+        e.setAttribute("rel", "stylesheet");
+        e.setAttribute("href", f);
+        e.setAttribute("class", l);
+        document.body.appendChild(e)
+    }
+ 
+    function h() {
+        var e = document.getElementsByClassName(l);
+        for (var t = 0; t < e.length; t++) {
+            document.body.removeChild(e[t])
+        }
+    }
+ 
+    function p() {
+        var e = document.createElement("div");
+        e.setAttribute("class", a);
+        document.body.appendChild(e);
+        setTimeout(function() {
+            document.body.removeChild(e)
+        }, 100)
+    }
+ 
+    function d(e) {
+        return {
+            height : e.offsetHeight,
+            width : e.offsetWidth
+        }
+    }
+ 
+    function v(i) {
+        var s = d(i);
+        return s.height > e && s.height < n && s.width > t && s.width < r
+    }
+ 
+    function m(e) {
+        var t = e;
+        var n = 0;
+        while (!!t) {
+            n += t.offsetTop;
+            t = t.offsetParent
+        }
+        return n
+    }
+ 
+    function g() {
+        var e = document.documentElement;
+        if (!!window.innerWidth) {
+            return window.innerHeight
+        } else if (e && !isNaN(e.clientHeight)) {
+            return e.clientHeight
+        }
+        return 0
+    }
+ 
+    function y() {
+        if (window.pageYOffset) {
+            return window.pageYOffset
+        }
+        return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+    }
+ 
+    function E(e) {
+        var t = m(e);
+        return t >= w && t <= b + w
+    }
+
+    function S() {
+        var e = document.getElementById("audio_element_id");
+        if(e != null){
+            var index = parseInt(e.getAttribute("curSongIndex"));
+            if(index > songs.length - 2) {
+                index = 0;
+            } else {
+                index++;
+            }
+            e.setAttribute("curSongIndex", index);
+            N();
+        }
+
+        e.src = i;
+        e.play()
+    }
+ 
+    function x(e) {
+        e.className += " " + s + " " + o
+    }
+ 
+    function T(e) {
+        e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+    }
+ 
+    function N() {
+        var e = document.getElementsByClassName(s);
+        var t = new RegExp("\\b" + s + "\\b");
+        for (var n = 0; n < e.length; ) {
+            e[n].className = e[n].className.replace(t, "")
+        }
+    }
+
+    function initAudioEle() {
+        var e = document.getElementById("audio_element_id");
+        if(e === null){
+            e = document.createElement("audio");
+            e.setAttribute("class", l);
+            e.setAttribute("curSongIndex", 0);
+            e.id = "audio_element_id";
+            e.loop = false;
+            e.bgcolor = 0;
+            e.addEventListener("canplay", function() {
+            setTimeout(function() {
+                x(k)
+            }, 500);
+            setTimeout(function() {
+                N();
+                p();
+                for (var e = 0; e < O.length; e++) {
+                    T(O[e])
+                }
+            }, 15500)
+        }, true);
+        e.addEventListener("ended", function() {
+            N();
+            h();
+            go();
+        }, true);
+        e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+        document.body.appendChild(e);
+        }
+    }
+    
+    initAudioEle();
+    var e = 30;
+    var t = 30;
+    var n = 350;
+    var r = 350;
+
+    var curSongIndex = parseInt(document.getElementById("audio_element_id").getAttribute("curSongIndex"));
+    var i = songs[curSongIndex];
+    
+    var s = "mw-harlem_shake_me";
+    var o = "im_first";
+    var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+    var a = "mw-strobe_light";
+
+    /* harlem-shake-style.css，替换成你的位置，也可以直接使用：//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css */
+    var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+    
+    var l = "mw_added_css";
+    var b = g();
+    var w = y();
+    var C = document.getElementsByTagName("*");
+    var k = null;
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            if (E(A)) {
+                k = A;
+                break
+            }
+        }
+    }
+    if (A === null) {
+        console.warn("Could not find a node of the right size. Please try a different page.");
+        return
+    }
+    c();
+    S();
+    var O = [];
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            O.push(A)
+        }
+    }
+    })()'><i class="menu-item-icon fa fa-music fa-fw"></i>High一下</a> </li>
+      <!-- end High一下 -->
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/09/svelte/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AmamiRyoin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/headImg/head_Img.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AmamiRyoin's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Svelte浅谈</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-03-09T23:47:07+08:00">
+                2021-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="探索Svelte"><a href="#探索Svelte" class="headerlink" title="探索Svelte"></a>探索Svelte</h2><h3 id="什么是Svelte"><a href="#什么是Svelte" class="headerlink" title="什么是Svelte"></a>什么是Svelte</h3><p><code>Svelte</code>本意是苗条纤瘦的，<code>Svelte</code>是一种构建用户界面的全新方法，它被预测为未来十年可能取代<code>React</code>和<code>Vue</code>等其他框架的新兴技术。作者是前端轮子哥 Rich Harris，同时也是 Rollup 的作者。</p>
+<p>他设计 <code>Svelte</code> 的核心思想在于『通过静态编译减少框架运行时的代码量』，也就是说，<code>vue</code> 和 <code>react</code> 这类传统的框架，都必须引入运行时 (runtime) 代码，用于虚拟dom、diff 算法。Svelted完全溶入JavaScript，应用所有需要的运行时代码都包含在bundle.js里面了，除了引入这个组件本身，你不需要再额外引入一个运行代码。<br>从2019年开始, Svelte出现在榜单中。刚刚过去的2020年，Svelte在满意度排行榜中超越了react，跃升到了第一位。</p>
+<h3 id="Svelte的优势"><a href="#Svelte的优势" class="headerlink" title="Svelte的优势"></a>Svelte的优势</h3><p>从容量大小来看，<code>Vue</code>58k，<code>React</code>97.5k，而<code>Svelte</code>只有9.7k。性能方面略逊<code>Vue</code>但是强于<code>React</code>。代码量方面碾压<code>Vue</code>和<code>React</code>。同时，Svelte自带数据框架。</p>
+<h3 id="Svelte的劣势"><a href="#Svelte的劣势" class="headerlink" title="Svelte的劣势"></a>Svelte的劣势</h3><ul>
+<li>没有像AntD那样成熟的UI库。</li>
+<li>Svelte 原生不支持预处理器，比如说less/scss。</li>
+<li>Svelte 原生脚手架没有目录划分。</li>
+<li>暂时不支持typescript，虽然官方说了会支持, 但是不知道什么时候。</li>
+</ul>
+<h3 id="Svelte如何处理渲染问题"><a href="#Svelte如何处理渲染问题" class="headerlink" title="Svelte如何处理渲染问题"></a>Svelte如何处理渲染问题</h3><p>众所周知，<code>React</code>采用的虚拟DOM和diff算法来解决渲染问题，但是由于<code>React</code> 采用<code>jsx</code>语法本质不理解数据代表的意义，没有办法做出优化，因此才会出现诸如pureComponent，shouldComponentUpdate，useMemo，useCallback这些生命周期来控制重复渲染问题。</p>
+<p>而<code>Svelte</code> 采用了<code>Templates</code>语法（类似于<code>Vue</code> 的写法），更加严格和具有语义性，可以在编译的过程中就进行优化操作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;p&gt;&#123;&#123;name&#125;&#125;&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;8888&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;8888&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure></p>
+<p>编译器针对这块template代码可以很清楚地知道哪些代码是会变动，哪些代码不会变动。</p>
+<h3 id="Svelte实例代码"><a href="#Svelte实例代码" class="headerlink" title="Svelte实例代码"></a>Svelte实例代码</h3><ul>
+<li>小demo</li>
+</ul>
+<p>App.svelte<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	import Button from &apos;./button.svelte&apos;</span><br><span class="line">	let name = &apos;world&apos;;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;h1&gt;Hello &#123;name&#125;!&lt;/h1&gt;</span><br><span class="line">&lt;Button/&gt;</span><br></pre></td></tr></table></figure></p>
+<p>button.svelte<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    let count = 0;</span><br><span class="line">    function handleClick() &#123;</span><br><span class="line">        count += 1;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;button on:click=&#123;handleClick&#125;&gt;</span><br><span class="line">	Clicked &#123;count&#125; &#123;count === 1 ? &apos;time&apos; : &apos;times&apos;&#125;</span><br><span class="line">&lt;/button&gt;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>$:</code>响应式语句</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let count = 0;</span><br><span class="line">$: doubled = count * 2;</span><br></pre></td></tr></table></figure>
+<p>在 <code>Svelte</code> 中，以 <code>$:</code> 开头的语句就是响应式语句，<code>Svelte</code> 会自动分析响应式语句所依赖的变量，当依赖变量发生变化时，<code>Svelte</code> 就会重新执行相应的响应式语句。当 <code>Svelte</code> 看到任何带有 <code>$:</code> 前缀的语句时，它就知道要将右边的变量赋值给左边的变量，而不需要使用<code>let</code>将一个变量的值绑定到另一个变量；并且<code>Svelte</code>可以以响应式的方式运行任何语句。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$: console.log(`the count is $&#123;count&#125;`);</span><br><span class="line">$: &#123;</span><br><span class="line">	console.log(`the count is $&#123;count&#125;`);</span><br><span class="line">	alert(`I SAID THE COUNT IS $&#123;count&#125;`);</span><br><span class="line">&#125;</span><br><span class="line">$: if (count &gt;= 10) &#123;</span><br><span class="line">	alert(`count is dangerously high!`);</span><br><span class="line">	count = 9;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>但是<code>Svelte</code>的响应是基于赋值操作的，数组的 <code>push</code>、<code>splice</code> 等操作不会触发响应式更新。</p>
+<ul>
+<li>接收Props</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	export let answer;</span><br><span class="line">    // export let answer = &apos;a mystery&apos;; 初始化value</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>生命周期</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	import &#123; onMount,onDestroy,beforeUpdate,afterUpdate,tick &#125; from &apos;svelte&apos;;</span><br><span class="line"></span><br><span class="line">	let photos = [];</span><br><span class="line"></span><br><span class="line">	onMount(async () =&gt; &#123;</span><br><span class="line">		const res = await fetch(`https://jsonplaceholder.typicode.com/photos?_limit=20`);</span><br><span class="line">		photos = await res.json();</span><br><span class="line">	&#125;);</span><br><span class="line">    </span><br><span class="line">    onDestroy(() =&gt; alert(&apos;gg&apos;));</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>逻辑判断<br>由于HTML没有类似于逻辑判断的语法，因此<code>Svelte</code>加了个这个东西。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	let user = &#123; loggedIn: false &#125;;</span><br><span class="line"></span><br><span class="line">	function toggle() &#123;</span><br><span class="line">		user.loggedIn = !user.loggedIn;</span><br><span class="line">	&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&#123;#if user.loggedIn&#125;</span><br><span class="line">	&lt;button on:click=&#123;toggle&#125;&gt;</span><br><span class="line">		Log out</span><br><span class="line">	&lt;/button&gt;</span><br><span class="line">&#123;/if&#125;</span><br><span class="line"></span><br><span class="line">&#123;#if !user.loggedIn&#125;</span><br><span class="line">	&lt;button on:click=&#123;toggle&#125;&gt;</span><br><span class="line">		Log in</span><br><span class="line">	&lt;/button&gt;</span><br><span class="line">&#123;/if&#125;</span><br><span class="line">//或</span><br><span class="line">&#123;#if user.loggedIn&#125;</span><br><span class="line">	&lt;button on:click=&#123;toggle&#125;&gt;</span><br><span class="line">		Log out</span><br><span class="line">	&lt;/button&gt;</span><br><span class="line">&#123;:else&#125;</span><br><span class="line">	&lt;button on:click=&#123;toggle&#125;&gt;</span><br><span class="line">		Log in</span><br><span class="line">	&lt;/button&gt;</span><br><span class="line">&#123;/if&#125;</span><br><span class="line">//或</span><br><span class="line">&#123;#if x &gt; 10&#125;</span><br><span class="line">	&lt;p&gt;&#123;x&#125; is greater than 10&lt;/p&gt;</span><br><span class="line">&#123;:else if 5 &gt; x&#125;</span><br><span class="line">	&lt;p&gt;&#123;x&#125; is less than 5&lt;/p&gt;</span><br><span class="line">&#123;:else&#125;</span><br><span class="line">	&lt;p&gt;&#123;x&#125; is between 5 and 10&lt;/p&gt;</span><br><span class="line">&#123;/if&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>遍历</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;#each cats as cat&#125;</span><br><span class="line">		&lt;li&gt;&lt;a target=&quot;_blank&quot; href=&quot;https://www.youtube.com/watch?v=&#123;cat.id&#125;&quot;&gt;</span><br><span class="line">        &#123;cat.name&#125;</span><br><span class="line">    &lt;/a&gt;&lt;/li&gt;</span><br><span class="line">&#123;/each&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>await</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;#await promise&#125;</span><br><span class="line">	&lt;p&gt;...waiting&lt;/p&gt;</span><br><span class="line">&#123;:then number&#125;</span><br><span class="line">	&lt;p&gt;The number is &#123;number&#125;&lt;/p&gt;</span><br><span class="line">&#123;:catch error&#125;</span><br><span class="line">	&lt;p style=&quot;color: red&quot;&gt;&#123;error.message&#125;&lt;/p&gt;</span><br><span class="line">&#123;/await&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><a href="https://www.sveltejs.cn/tutorial/await-blocks" target="_blank" rel="noopener">demo</a></p>
+<ul>
+<li>事件绑定<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;button on:click|once=&#123;handleClick&#125;&gt;</span><br><span class="line">	Click me</span><br><span class="line">&lt;/button&gt;</span><br><span class="line">&lt;button on:click=&#123;handleClick&#125;&gt;</span><br><span class="line">	Click me</span><br><span class="line">&lt;/button&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>自定义事件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	import Inner from &apos;./Inner.svelte&apos;;</span><br><span class="line"></span><br><span class="line">	function handleMessage(event) &#123;</span><br><span class="line">		alert(event.detail.text);</span><br><span class="line">	&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;Inner on:message=&#123;handleMessage&#125;/&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">	import &#123; createEventDispatcher &#125; from &apos;svelte&apos;;</span><br><span class="line"></span><br><span class="line">	const dispatch = createEventDispatcher();</span><br><span class="line"></span><br><span class="line">	function sayHello() &#123;</span><br><span class="line">		dispatch(&apos;message&apos;, &#123;</span><br><span class="line">			text: &apos;Hello!&apos;</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;button on:click=&#123;sayHello&#125;&gt;</span><br><span class="line">	Click to say hello</span><br><span class="line">&lt;/button&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Store<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">store.js</span><br><span class="line"></span><br><span class="line">import &#123; writable,readable,derived &#125; from &apos;svelte/store&apos;;</span><br><span class="line">export const count = writable(0);//writable类型的store有update和set两种subscribe方法</span><br><span class="line"></span><br><span class="line">export const time = readable(new Date(), function start(set) &#123;</span><br><span class="line">	const interval = setInterval(() =&gt; &#123;</span><br><span class="line">		set(new Date());</span><br><span class="line">	&#125;, 1000);</span><br><span class="line"></span><br><span class="line">	return function stop() &#123;</span><br><span class="line">		clearInterval(interval);</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;);</span><br><span class="line">//readable无法从外部进行更新,没有set（）或update（）方法。一旦设置了初始状态，便无法从外部进行修改。</span><br><span class="line"></span><br><span class="line">export const elapsed = derived(</span><br><span class="line">	time,</span><br><span class="line">	$time =&gt; Math.round(($time - 100*Math.random()) / 1000)</span><br><span class="line">);</span><br><span class="line">//derived允许您创建依赖于现有存储的值的新存储值</span><br><span class="line"></span><br><span class="line">app.svelte</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">	import &#123; count &#125; from &apos;./stores.js&apos;;</span><br><span class="line">	import Incrementer from &apos;./Incrementer.svelte&apos;;</span><br><span class="line">	import Decrementer from &apos;./Decrementer.svelte&apos;;</span><br><span class="line">	import Resetter from &apos;./Resetter.svelte&apos;;</span><br><span class="line"></span><br><span class="line">	let count_value;</span><br><span class="line"></span><br><span class="line">	const unsubscribe = count.subscribe(value =&gt; &#123;</span><br><span class="line">		count_value = value;</span><br><span class="line">	&#125;);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;h1&gt;The count is &#123;count_value&#125;&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>综上。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>觉得不错的话可以打赏哦</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="AmamiRyoin 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Svelte/" rel="tag"># Svelte</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/12/02/webpack/" rel="next" title="webpack使用心得总结">
+                <i class="fa fa-chevron-left"></i> webpack使用心得总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/headImg/head_Img.jpg"
+                alt="AmamiRyoin" />
+            
+              <p class="site-author-name" itemprop="name">AmamiRyoin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/AmamiRyoin" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/RyoinAmami" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#探索Svelte"><span class="nav-number">1.</span> <span class="nav-text">探索Svelte</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是Svelte"><span class="nav-number">1.1.</span> <span class="nav-text">什么是Svelte</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Svelte的优势"><span class="nav-number">1.2.</span> <span class="nav-text">Svelte的优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Svelte的劣势"><span class="nav-number">1.3.</span> <span class="nav-text">Svelte的劣势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Svelte如何处理渲染问题"><span class="nav-number">1.4.</span> <span class="nav-text">Svelte如何处理渲染问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Svelte实例代码"><span class="nav-number">1.5.</span> <span class="nav-text">Svelte实例代码</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AmamiRyoin</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  <canvas></canvas>
+  <script type="text/javascript">
+    document.getElementsByTagName('canvas')[0].style="position:fixed;top:0;bottom:0;left:0;right:0;width: 100%;height: 100%;pointer-events: none;z-index: -1;";
+    document.addEventListener('touchmove', function (e) {
+                e.preventDefault()
+            })
+            var c = document.getElementsByTagName('canvas')[0],
+                x = c.getContext('2d'),
+                pr = window.devicePixelRatio || 1,
+                w = window.innerWidth,
+                h = window.innerHeight,
+                f = 90,
+                q,
+                m = Math,
+                r = 0,
+                u = m.PI*2,
+                v = m.cos,
+                z = m.random
+            c.width = w*pr
+            c.height = h*pr
+            x.scale(pr, pr)
+            x.globalAlpha = 0.6
+            function i(){
+                x.clearRect(0,0,w,h)
+                q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
+                while(q[1].x<w+f) d(q[0], q[1])
+            }
+            function d(i,j){
+                x.beginPath()
+                x.moveTo(i.x, i.y)
+                x.lineTo(j.x, j.y)
+                var k = j.x + (z()*2-0.25)*f,
+                    n = y(j.y)
+                x.lineTo(k, n)
+                x.closePath()
+                r-=u/-50
+                x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16)
+                x.fill()
+                q[0] = q[1]
+                q[1] = {x:k,y:n}
+            }
+            function y(p){
+                var t = p + (z()*2-1.1)*f
+                return (t>h||t<0) ? y(p) : t
+            }
+            document.onclick = i
+            document.ontouchstart = i
+            i()
+  </script>
+</body>
+</html>
