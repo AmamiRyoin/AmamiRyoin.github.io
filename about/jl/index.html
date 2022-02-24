@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="AmamiRyoin&#39;s Blog">
 <meta property="og:description" content="联系方式Email: 1164101687@qq.comgithub: amamiryoin.github.io 基本信息姓名：张真欣出生年月：1995-02学历：本科专业：通信工程学校：金陵科技学院(二本)电话：17326138064目前所在城市：无锡 个人简介前端工程师   对于前端方面的知识有较强的兴趣，对于新知识的理解吸收较快，能快速适应新的工作环境。  技术方面，能熟练运用各种前端框架进">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2022-02-24T14:11:45.347Z">
+<meta property="og:updated_time" content="2022-02-24T16:06:14.641Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AmamiRyoin的个人">
 <meta name="twitter:description" content="联系方式Email: 1164101687@qq.comgithub: amamiryoin.github.io 基本信息姓名：张真欣出生年月：1995-02学历：本科专业：通信工程学校：金陵科技学院(二本)电话：17326138064目前所在城市：无锡 个人简介前端工程师   对于前端方面的知识有较强的兴趣，对于新知识的理解吸收较快，能快速适应新的工作环境。  技术方面，能熟练运用各种前端框架进">
@@ -464,68 +464,58 @@
 <ul>
 <li>后端语言：Node / Express / Koa</li>
 <li>前端框架：jQuery/ React + Redux + react-redux / Vue</li>
-<li>前端工具：sass/postcss/less/hexo/requirejs/Webpack</li>
+<li>前端工具：sass/postcss/less/hexo/Webpack</li>
 <li>数据库相关：MongoDB</li>
 <li>版本管理、文档和自动化部署工具：Svn/Git/Gulp</li>
 </ul>
 <p>其他：日语N2、Sony Vegas(做做MAD)、CAD二级、大学英语四级、室内设计学习中。。。。</p>
 <h1 id="工作经历"><a href="#工作经历" class="headerlink" title="工作经历"></a>工作经历</h1><p>职位：web前端开发<br>2021.04-至今            富仁工业物联网有限公司</p>
 <ul>
-<li>微前端项目拆分</li>
-<li>负责低代码平台开发</li>
-<li>机加家saas平台开发    </li>
+<li>微前端项目拆分<br>  通过使用qiankun.js将总应用平台进行子应用与父应用拆分，从而达到降低项目耦合，减小项目体积，提高项目发布容错率的目的。<ul>
+<li>项目难点：由于原项目耦合较深，需要拆分大量的通用方法和私有方法以及通用组件和私有组件，虽然qiankun的侵入性较小，但是需要做到对所有子应用项目代码十分熟悉才能精确拆分代码。</li>
 </ul>
-<p>职位：web前端开发<br>2018.02-2021.04            南京车易淘网络科技有限公司    </p>
+</li>
+<li>负责低代码平台开发<br>  通过Vue框架进行低代码平台的搭建，旨在通过低代码的方式迅速完成某些业务代码以及页面的编写，核心由Vue的component组件对配置的页面结构json进行渲染对应数据下的视图，通过添加大量的基础组件以及业务组件来满足不同页面的搭建与开发。<ul>
+<li>项目难点：第一次尝试低代码的代码编写，前期花了大量时间在低代码调研上，并通过百度的amis确定了大体编写思路，通过生成页面配置json来构建低代码页面，从而达到减少开发时间和成本的目的。</li>
+</ul>
+</li>
+</ul>
+<p>职位：web前端开发<br>2018.02-2021.04            南京三百云网络科技有限公司    </p>
 <ul>
-<li>上海大地保险车房系统项目组前端开发，技术栈umi,dva。    </li>
-<li>负责公司前端业务的开发，主要从事风控后台系统的前端开发，技术栈react，redux，react-thunk,react-router一套。</li>
+<li>上海大地保险车房系统项目组前端开发，技术栈react,umi。<br>  这个项目是车300和上海大地保险合作的基于车300汽车大数据的车险审批后台管理系统。旨在给大地保险内部审批部门提供风险数据支持，并将线下审批流程迁移至线上，同时满足不同情况下的审批验证以及车险办理和发放。<ul>
+<li>项目难点：<br>  1、审批业务流程通过工作流的方式进行，前端通过bmpn.js进行工作流的展示和处理，需要对流程图代码进行编写和构造，并与后端完成审批工作流的对接联调。<br>  2、系统中存在大量的表单，前端通过抽象化编写通用组件来完成对表单的处理和操作。</li>
+</ul>
+</li>
+<li>基于pupeteer的自动化测试管理系统<br>  个人内部项目（试水），用于解决自动化UI测试，解放测试的页面测试时间。<br>  技术栈：pupeteer，node，mongoose<ul>
+<li>项目难点：还原测试页面上的操作以及步骤流程的入库操作，整合进chrome插件中。</li>
+</ul>
+</li>
+<li>gamma金融风控后台管理系统，技术栈react，redux，react-thunk,react-router一套。<br>  这个项目是车300面向金融机构的风险预警管理系统，依托车300的车辆大数据来对借贷人和抵押车辆进行风险评估从而达到精准发放车贷的目的。<ul>
+<li>项目难点：项目核心是车贷报告打印以及车贷计算器。打印是通过浏览器实现pdf文档保存以及打印机打印，由于打印规格和浏览器显示有出入，前端需要兼容打印样式。车贷计算器由前端进行对应的逻辑处理和数值计算，并且UI方面也比较具有挑战性。</li>
+</ul>
+</li>
 <li>做过一些微信页面以及小程序的开发工作，主要使用vue和mpvue</li>
 </ul>
 <p>职位：ued前端开发<br>2017.06-2018.02            南京烽火软件科技有限公司        </p>
 <ul>
-<li>负责公司前端业务的开发，主要是做面向大数据的前端数据展示，主要利用echarts；</li>
+<li><p>事件管控<br>  基于大数据爬虫对特定对象进行监管的平台系统<br>  技术栈:jquery</p>
+<ul>
+<li>项目难点:引入了jq插件，为适应系统功能将该插件进行改造</li>
+</ul>
+</li>
+<li><p>大屏UI规范<br>  大屏ui规范，用于公司内部快速开发，旨在能让不懂前端的开发也能快速搭建页面。<br>  技术栈:jquery</p>
+<ul>
+<li>项目难点:用jq编写UI组件以及编写前端文档手册</li>
+</ul>
+</li>
+<li><p>负责公司前端业务的开发，主要是做面向大数据的前端数据展示，主要利用echarts；</p>
+</li>
 <li>在公司做过三次分享，分别是认识react和redux；认识redux-saga以及postcss在公司项目中的使用；</li>
 </ul>
 <p>职位：web 开发<br>2016.08-2017.04（实习）    江苏千米网络科技有限公司</p>
 <ul>
-<li>负责公司建站项目组的前端开发，主要是写react组件；</li>
-<li>负责公司建站项目组商城首页以及海报页的开发。</li>
-</ul>
-<h1 id="项目经验"><a href="#项目经验" class="headerlink" title="项目经验"></a>项目经验</h1><p>大地信保车房管理系统</p>
-<ul>
-<li>大地保险驻场开发项目，主要做用于车保的后台管理系统开发。</li>
-<li>技术栈：umi，dva</li>
-<li>难点：对于大规模表单的渲染以及计算逻辑处理，组件的封装灵活性。</li>
-</ul>
-<p>基于pupeteer的自动化测试管理系统</p>
-<ul>
-<li>个人内部项目（试水），用于解决自动化UI测试，解放测试的页面测试时间</li>
-<li>技术栈：pupeteer，node，mongoose</li>
-<li>难点：还原测试页面上的操作以及步骤流程的入库操作</li>
-</ul>
-<p>gamma风控系统</p>
-<ul>
-<li>对车贷方面提供针对借款人的风控监测服务的后台系统。</li>
-<li>技术栈:react全家桶</li>
-<li>难点:针对报告内容的各种错综复杂的交互以及对报告内容的打印处理</li>
-</ul>
-<p>事件管控</p>
-<ul>
-<li>基于大数据爬虫对特定对象进行监管的平台系统</li>
-<li>技术栈:jquery</li>
-<li>难点:引入了jq插件，为适应系统功能将该插件进行改造</li>
-</ul>
-<p>大屏UI规范</p>
-<ul>
-<li>大屏ui规范，用于公司内部快速开发，旨在能让不懂前端的开发也能快速搭建页面。</li>
-<li>技术栈:jquery</li>
-<li>难点:和项目负责人搭建了一套自主UI框架</li>
-</ul>
-<p>电商模板页面开发</p>
-<ul>
-<li>针对PC端和WX端进行商城模板页面的开发</li>
-<li>技术栈:react</li>
-<li>难点:实习岗位刚接触react</li>
+<li>负责公司建站项目组的前端开发，主要是写react组件，负责公司建站项目组商城首页以及海报页的开发。</li>
+<li>项目难点：实习期刚接触react，处于边学边做的阶段，对其核心理念理解不够深入，导致犯了一些原则性的错误。</li>
 </ul>
 
         
@@ -663,7 +653,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#联系方式"><span class="nav-number">1.</span> <span class="nav-text">联系方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本信息"><span class="nav-number">2.</span> <span class="nav-text">基本信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#个人简介"><span class="nav-number">3.</span> <span class="nav-text">个人简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#技能清单"><span class="nav-number">4.</span> <span class="nav-text">技能清单</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#工作经历"><span class="nav-number">5.</span> <span class="nav-text">工作经历</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目经验"><span class="nav-number">6.</span> <span class="nav-text">项目经验</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#联系方式"><span class="nav-number">1.</span> <span class="nav-text">联系方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本信息"><span class="nav-number">2.</span> <span class="nav-text">基本信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#个人简介"><span class="nav-number">3.</span> <span class="nav-text">个人简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#技能清单"><span class="nav-number">4.</span> <span class="nav-text">技能清单</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#工作经历"><span class="nav-number">5.</span> <span class="nav-text">工作经历</span></a></li></ol></div>
             
 
           </div>
